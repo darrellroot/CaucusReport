@@ -9,10 +9,31 @@
 import SwiftUI
 
 struct EarlyVoterView: View {
+    @EnvironmentObject var model: Model
+
     var body: some View {
         VStack {
-            Text("Early Voter View")
-        }.navigationBarTitle("Early Voter View")
+            List(model.candidates, id: \.self) { candidate in
+                //ForEach(model.candidates, id: \.self) { candidate in
+                HStack {
+                    Text(candidate)
+                    Spacer()
+                    Button(action: {
+                        self.model.earlyVote1[candidate] = self.model.earlyVote1[candidate]! - 1
+                    }) {
+                        Image(systemName: "minus")
+                    }
+                    Spacer()
+                    Button(action: {
+                        self.model.earlyVote1[candidate] = self.model.earlyVote1[candidate]! + 1
+                    }) {
+                        Image(systemName: "plus")
+                    }
+                    Spacer()
+                    Text("\(self.model.earlyVote1[candidate]!)")
+                }
+            }
+        }.navigationBarTitle("Early Vote Total")
     }
 }
 
