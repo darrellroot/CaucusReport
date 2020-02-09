@@ -13,6 +13,9 @@
 		2F22B37923EF2B8C009DD8ED /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2F22B37823EF2B8C009DD8ED /* Assets.xcassets */; };
 		2F22B37C23EF2B8C009DD8ED /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2F22B37B23EF2B8C009DD8ED /* Preview Assets.xcassets */; };
 		2F22B37F23EF2B8C009DD8ED /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2F22B37D23EF2B8C009DD8ED /* LaunchScreen.storyboard */; };
+		2F22B38723EF301D009DD8ED /* Caucuses.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F22B38623EF301D009DD8ED /* Caucuses.swift */; };
+		2F22B38923EFC2F2009DD8ED /* EarlyVoterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F22B38823EFC2F2009DD8ED /* EarlyVoterView.swift */; };
+		2F22B38B23F078B0009DD8ED /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F22B38A23F078B0009DD8ED /* Model.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +27,9 @@
 		2F22B37B23EF2B8C009DD8ED /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		2F22B37E23EF2B8C009DD8ED /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		2F22B38023EF2B8C009DD8ED /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		2F22B38623EF301D009DD8ED /* Caucuses.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Caucuses.swift; sourceTree = "<group>"; };
+		2F22B38823EFC2F2009DD8ED /* EarlyVoterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EarlyVoterView.swift; sourceTree = "<group>"; };
+		2F22B38A23F078B0009DD8ED /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -63,6 +69,9 @@
 				2F22B37D23EF2B8C009DD8ED /* LaunchScreen.storyboard */,
 				2F22B38023EF2B8C009DD8ED /* Info.plist */,
 				2F22B37A23EF2B8C009DD8ED /* Preview Content */,
+				2F22B38623EF301D009DD8ED /* Caucuses.swift */,
+				2F22B38823EFC2F2009DD8ED /* EarlyVoterView.swift */,
+				2F22B38A23F078B0009DD8ED /* Model.swift */,
 			);
 			path = CaucusReport;
 			sourceTree = "<group>";
@@ -146,7 +155,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2F22B38923EFC2F2009DD8ED /* EarlyVoterView.swift in Sources */,
 				2F22B37323EF2B88009DD8ED /* AppDelegate.swift in Sources */,
+				2F22B38723EF301D009DD8ED /* Caucuses.swift in Sources */,
+				2F22B38B23F078B0009DD8ED /* Model.swift in Sources */,
 				2F22B37523EF2B88009DD8ED /* SceneDelegate.swift in Sources */,
 				2F22B37723EF2B88009DD8ED /* ContentView.swift in Sources */,
 			);
