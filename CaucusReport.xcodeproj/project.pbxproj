@@ -17,6 +17,12 @@
 		2F22B38923EFC2F2009DD8ED /* EarlyVoterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F22B38823EFC2F2009DD8ED /* EarlyVoterView.swift */; };
 		2F22B38B23F078B0009DD8ED /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F22B38A23F078B0009DD8ED /* Model.swift */; };
 		2F22B38D23F08852009DD8ED /* PrecinctView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F22B38C23F08852009DD8ED /* PrecinctView.swift */; };
+		2F22B38F23F0B57C009DD8ED /* EarlyVote1Detail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F22B38E23F0B57C009DD8ED /* EarlyVote1Detail.swift */; };
+		2F22B39123F0BAB8009DD8ED /* VoteModifyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F22B39023F0BAB8009DD8ED /* VoteModifyView.swift */; };
+		2F22B39323F0BC3F009DD8ED /* ElectionPhase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F22B39223F0BC3F009DD8ED /* ElectionPhase.swift */; };
+		2F22B39523F0C1DD009DD8ED /* Attendee1View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F22B39423F0C1DD009DD8ED /* Attendee1View.swift */; };
+		2F22B39723F0C28A009DD8ED /* AttendeeVote1Detail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F22B39623F0C28A009DD8ED /* AttendeeVote1Detail.swift */; };
+		2F22B39923F0C898009DD8ED /* Alignment1Review.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F22B39823F0C898009DD8ED /* Alignment1Review.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +38,12 @@
 		2F22B38823EFC2F2009DD8ED /* EarlyVoterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EarlyVoterView.swift; sourceTree = "<group>"; };
 		2F22B38A23F078B0009DD8ED /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
 		2F22B38C23F08852009DD8ED /* PrecinctView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrecinctView.swift; sourceTree = "<group>"; };
+		2F22B38E23F0B57C009DD8ED /* EarlyVote1Detail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EarlyVote1Detail.swift; sourceTree = "<group>"; };
+		2F22B39023F0BAB8009DD8ED /* VoteModifyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoteModifyView.swift; sourceTree = "<group>"; };
+		2F22B39223F0BC3F009DD8ED /* ElectionPhase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElectionPhase.swift; sourceTree = "<group>"; };
+		2F22B39423F0C1DD009DD8ED /* Attendee1View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Attendee1View.swift; sourceTree = "<group>"; };
+		2F22B39623F0C28A009DD8ED /* AttendeeVote1Detail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttendeeVote1Detail.swift; sourceTree = "<group>"; };
+		2F22B39823F0C898009DD8ED /* Alignment1Review.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Alignment1Review.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -69,12 +81,18 @@
 				2F22B37623EF2B88009DD8ED /* ContentView.swift */,
 				2F22B38C23F08852009DD8ED /* PrecinctView.swift */,
 				2F22B38823EFC2F2009DD8ED /* EarlyVoterView.swift */,
+				2F22B38E23F0B57C009DD8ED /* EarlyVote1Detail.swift */,
+				2F22B39023F0BAB8009DD8ED /* VoteModifyView.swift */,
+				2F22B39423F0C1DD009DD8ED /* Attendee1View.swift */,
+				2F22B39623F0C28A009DD8ED /* AttendeeVote1Detail.swift */,
 				2F22B37823EF2B8C009DD8ED /* Assets.xcassets */,
 				2F22B37D23EF2B8C009DD8ED /* LaunchScreen.storyboard */,
 				2F22B38023EF2B8C009DD8ED /* Info.plist */,
 				2F22B37A23EF2B8C009DD8ED /* Preview Content */,
 				2F22B38623EF301D009DD8ED /* Caucuses.swift */,
 				2F22B38A23F078B0009DD8ED /* Model.swift */,
+				2F22B39223F0BC3F009DD8ED /* ElectionPhase.swift */,
+				2F22B39823F0C898009DD8ED /* Alignment1Review.swift */,
 			);
 			path = CaucusReport;
 			sourceTree = "<group>";
@@ -161,10 +179,16 @@
 				2F22B38923EFC2F2009DD8ED /* EarlyVoterView.swift in Sources */,
 				2F22B37323EF2B88009DD8ED /* AppDelegate.swift in Sources */,
 				2F22B38723EF301D009DD8ED /* Caucuses.swift in Sources */,
+				2F22B39123F0BAB8009DD8ED /* VoteModifyView.swift in Sources */,
+				2F22B39723F0C28A009DD8ED /* AttendeeVote1Detail.swift in Sources */,
 				2F22B38B23F078B0009DD8ED /* Model.swift in Sources */,
 				2F22B37523EF2B88009DD8ED /* SceneDelegate.swift in Sources */,
 				2F22B38D23F08852009DD8ED /* PrecinctView.swift in Sources */,
+				2F22B39523F0C1DD009DD8ED /* Attendee1View.swift in Sources */,
+				2F22B38F23F0B57C009DD8ED /* EarlyVote1Detail.swift in Sources */,
+				2F22B39323F0BC3F009DD8ED /* ElectionPhase.swift in Sources */,
 				2F22B37723EF2B88009DD8ED /* ContentView.swift in Sources */,
+				2F22B39923F0C898009DD8ED /* Alignment1Review.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

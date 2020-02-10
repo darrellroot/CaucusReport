@@ -16,24 +16,17 @@ struct EarlyVoterView: View {
             List(model.candidates, id: \.self) { candidate in
                 //ForEach(model.candidates, id: \.self) { candidate in
                 HStack {
-                    Text(candidate)
-                    Spacer()
-                    Button(action: {
-                        self.model.earlyVote1[candidate] = self.model.earlyVote1[candidate]! - 1
-                    }) {
-                        Image(systemName: "minus")
+                    NavigationLink(destination: EarlyVote1Detail(candidate: candidate)) {
+                        Text(candidate)
+                        Spacer()
+                        Text("\(self.model.earlyVote1[candidate]!)")
                     }
-                    Spacer()
-                    Button(action: {
-                        self.model.earlyVote1[candidate] = self.model.earlyVote1[candidate]! + 1
-                    }) {
-                        Image(systemName: "plus")
-                    }
-                    Spacer()
-                    Text("\(self.model.earlyVote1[candidate]!)")
                 }
             }
-        }.navigationBarTitle("Early Vote Total")
+        }.navigationBarTitle("Early Vote Align 1")
+        .navigationBarItems(trailing:
+            NavigationLink(destination: Attendee1View()) { Text("In Person Align 1") })
+
     }
 }
 

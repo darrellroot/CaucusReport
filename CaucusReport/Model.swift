@@ -14,23 +14,114 @@ class Model: ObservableObject {
     @Published var realMode = false
     @Published var county: String = ""
     @Published var precinct: String = ""
-    @Published var delegates: Int = 0 {
+    @Published var delegates: Int = 2 {
         didSet {
-            if delegates < 0 {
-                delegates = 0
+            if delegates < 2 {
+                delegates = 2
             }
         }
     }
     
     @Published var candidates = Model.originalCandidates
     
-    @Published var earlyVote1: [String: Int] = [:]
-    @Published var align1PresentVote: [String: Int] = [:]
+    @Published var earlyVote1: [String: Int] = [:] {
+        didSet {
+            for key in earlyVote1.keys {
+                if earlyVote1[key]! < 0 {
+                    earlyVote1[key] = 0
+                }
+            }
+        }
+    }
+    @Published var attendeeVote1: [String: Int] = [:] {
+           didSet {
+               for key in attendeeVote1.keys {
+                   if attendeeVote1[key]! < 0 {
+                       attendeeVote1[key] = 0
+                   }
+               }
+           }
+       }
+    @Published var earlyVote2: [String: Int] = [:] {
+           didSet {
+               for key in earlyVote2.keys {
+                   if earlyVote2[key]! < 0 {
+                       earlyVote2[key] = 0
+                   }
+               }
+           }
+       }
+    @Published var attendeeVote2: [String: Int] = [:] {
+           didSet {
+               for key in attendeeVote2.keys {
+                   if attendeeVote2[key]! < 0 {
+                       attendeeVote2[key] = 0
+                   }
+               }
+           }
+       }
     
+    func align1Total(candidate: String) -> Int {
+        return (earlyVote1[candidate] ?? 0) + (attendeeVote1[candidate] ?? 0)
+    }
+    
+    var early1GrandTotal: Int {
+        var grandTotal = 0
+        for candidate in self.candidates {
+            if candidate != "Uncommitted" {
+                grandTotal = grandTotal + (earlyVote1[candidate] ?? 0)
+            }
+        }
+        return grandTotal
+    }
+
+    var attendee1GrandTotal: Int {
+        var grandTotal = 0
+        for candidate in self.candidates {
+            if candidate != "Uncommitted" {
+                grandTotal = grandTotal + (attendeeVote1[candidate] ?? 0)
+            }
+        }
+        return grandTotal
+    }
+
+    var align1GrandTotal: Int {
+        return early1GrandTotal + attendee1GrandTotal
+    }
+    
+    var viabilityPercentage: Double {
+        switch self.delegates {
+        case 2:
+            return 0.25
+        case 3:
+            return 0.166667
+        case 4...:
+            return 0.15
+        default:
+            debugPrint("should not get here")
+            return 0.25
+        }
+    }
+    
+    func viable(candidate: String) -> Bool {
+        if align1Total(candidate: candidate) >= viability {
+            return true
+        } else {
+            return false
+        }
+    }
+    
+    var viability: Int {
+        let doubleViability = (Double(align1GrandTotal) * viabilityPercentage).rounded(.up)
+        return Int(doubleViability)
+    }
+
     init() {
         for candidate in candidates {
             earlyVote1[candidate] = 0
-            align1PresentVote[candidate] = 0
+            attendeeVote1[candidate] = 0
+            earlyVote2[candidate] = 0
+            attendeeVote2[candidate] = 0
         }
     }
     
@@ -40,7 +131,9 @@ class Model: ObservableObject {
         } else {
             candidates.append(name)
             earlyVote1[name] = 0
-            align1PresentVote[name] = 0
+            attendeeVote1[name] = 0
+            earlyVote2[name] = 0
+            attendeeVote2[name] = 0
         }
     }
     
