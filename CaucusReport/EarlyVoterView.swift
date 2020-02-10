@@ -25,7 +25,7 @@ struct EarlyVoterView: View {
             }
         }.navigationBarTitle("Early Vote Align 1")
         .navigationBarItems(trailing:
-            NavigationLink(destination: Attendee1View()) { Text("In Person Align 1") })
+            NavigationLink(destination: Attendee1View()) { Text("Attendee Align 1") })
 
     }
 }
