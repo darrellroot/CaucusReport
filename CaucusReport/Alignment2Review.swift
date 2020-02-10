@@ -19,10 +19,11 @@ struct Alignment2Review: View {
             VStack(alignment: .leading) {
                 Text("Total Align1 Votes=\(model.early1GrandTotal)+\(model.attendee1GrandTotal)=\(model.align1GrandTotal)")
                 Text("Total Align2 Votes=\(model.early2GrandTotal)+\(model.attendee2GrandTotal)=\(model.align2GrandTotal)")
+                Text("Total early and attendee registrations \(model.align1GrandTotal)")
                 Text("Delegates \(model.precinctDelegates)")
                 Text("Viability percentage \(model.viabilityPercentage)")
                 Text("Votes required for viability \(model.viability)")
-                Text("Alignment 2 Votes").font(.headline)
+                Text("Alignment 2 Viable Votes").font(.headline)
             }
             List(model.viableCandidates, id: \.self) { candidate in
                 HStack {

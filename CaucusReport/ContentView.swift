@@ -45,7 +45,10 @@ struct ContentView: View {
 
             .navigationBarTitle(Text("Caucus Report"))
             .navigationBarItems(trailing:
-                NavigationLink(destination: PrecinctView()) { Text("Precinct") })
+                NavigationLink(destination: PrecinctView()) { HStack {
+                    Text("Precinct")
+                    Image(systemName: "chevron.right")
+                    } })
         } // navigation view
     }// body
 }

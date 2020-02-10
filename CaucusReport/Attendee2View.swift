@@ -14,7 +14,7 @@ struct Attendee2View: View {
         var body: some View {
             VStack {
                 Text("Do not include early voting if they were entered on the early vote screen")
-                List(model.viableCandidates, id: \.self) { candidate in
+                List(model.candidates, id: \.self) { candidate in
                     HStack {
                         NavigationLink(destination: AttendeeVote2Detail(candidate: candidate)) {
                             Text(candidate)
@@ -23,9 +23,13 @@ struct Attendee2View: View {
                         }
                     }
                 }
-            }.navigationBarTitle("Attendee Align 2 votes", displayMode: .inline)
+            }.navigationBarTitle("Attendee Align 2 Votes", displayMode: .inline)
             .navigationBarItems(trailing:
-                NavigationLink(destination: Alignment2Review()) { Text("Align 2 Review") })
+                NavigationLink(destination: Alignment2Review()) {
+                    HStack {
+                        Text("Align 2 Review")
+                        Image(systemName: "chevron.right")
+                    } })
 
         }
     }

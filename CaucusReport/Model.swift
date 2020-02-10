@@ -9,7 +9,7 @@
 import Foundation
 
 class Model: ObservableObject, Codable {
-    static let originalCandidates = ["Bennet","Biden","Bloomberg","Buttigieg","Gabbard","Kloubuchar","Patrick","Sanders","Steyer","Warren","Yang", "Uncommitted"]
+    static let originalCandidates = ["Bennet","Biden","Bloomberg","Booker","Buttigieg","Delaney","Gabbard","Kloubuchar","Patrick","Sanders","Steyer","Warren","Williamson","Yang","Uncommitted"]
     
     @Published var realMode = false
     @Published var county: String = ""
@@ -21,6 +21,8 @@ class Model: ObservableObject, Codable {
             }
         }
     }
+    @Published var totalAttendees = 0
+    @Published var totalEarlyVoters = 0
     
     @Published var candidates = Model.originalCandidates
     
@@ -155,7 +157,7 @@ extension Model { // everything below here are calculated properties
     var viableCandidates: [String] {
         var result: [String] = []
         for candidate in candidates {
-            if viable(candidate: candidate) {
+            if viable2(candidate: candidate) {
                 result.append(candidate)
             }
         }
@@ -205,8 +207,15 @@ extension Model { // everything below here are calculated properties
         }
     }
     
-    func viable(candidate: String) -> Bool {
+    func viable1(candidate: String) -> Bool {
         if align1Total(candidate: candidate) >= viability {
+            return true
+        } else {
+            return false
+        }
+    }
+    func viable2(candidate: String) -> Bool {
+        if align2Total(candidate: candidate) >= viability {
             return true
         } else {
             return false

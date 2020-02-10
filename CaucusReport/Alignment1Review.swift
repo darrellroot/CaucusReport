@@ -18,8 +18,10 @@ struct Alignment1Review: View {
         VStack {
             VStack(alignment: .leading) {
                 Text("Uncommitted votes do not count for viability")
-                Text("Total Early Votes \(model.early1GrandTotal)")
-                Text("Total Attendee Votes \(model.attendee1GrandTotal)")
+                Text("Total Early Votes \(model.totalEarlyVoters)")
+                Text("Early Votes Recorded \(model.early1GrandTotal)")
+                Text("Total Attendees \(model.totalAttendees)")
+                Text("Attendee Votes Recorded \(model.attendee1GrandTotal)")
                 Text("Alignment 1 Votes \(model.align1GrandTotal)")
                 Text("Delegates \(model.precinctDelegates)")
                 Text("Viability percentage \(model.viabilityPercentage)")
@@ -43,7 +45,10 @@ struct Alignment1Review: View {
         }
         .navigationBarTitle("Align 1 Review", displayMode: .inline)
         .navigationBarItems(trailing: NavigationLink(destination: EarlyVoter2View()) {
-            Text("Align 2 Early Vote")
+            HStack {
+                Text("Align 2 Early Vote")
+                Image(systemName: "chevron.right")
+            }
         })
     }
     func tweet() {

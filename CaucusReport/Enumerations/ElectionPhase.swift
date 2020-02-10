@@ -9,6 +9,8 @@
 import Foundation
 
 enum ElectionPhase {
+    case totalEarlyVote
+    case totalAttendees
     case earlyVote1
     case attendeeVote1
     case earlyVote2

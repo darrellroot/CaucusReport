@@ -77,6 +77,14 @@
 			path = Extensions;
 			sourceTree = "<group>";
 		};
+		2F0BAB0523F1FB390044BA0E /* Enumerations */ = {
+			isa = PBXGroup;
+			children = (
+				2F22B39223F0BC3F009DD8ED /* ElectionPhase.swift */,
+			);
+			path = Enumerations;
+			sourceTree = "<group>";
+		};
 		2F22B36623EF2B88009DD8ED = {
 			isa = PBXGroup;
 			children = (
@@ -96,6 +104,7 @@
 		2F22B37123EF2B88009DD8ED /* CaucusReport */ = {
 			isa = PBXGroup;
 			children = (
+				2F0BAB0523F1FB390044BA0E /* Enumerations */,
 				2F0BAADE23F0F4EC0044BA0E /* Extensions */,
 				2F22B37223EF2B88009DD8ED /* AppDelegate.swift */,
 				2F22B37423EF2B88009DD8ED /* SceneDelegate.swift */,
@@ -105,20 +114,19 @@
 				2F22B38E23F0B57C009DD8ED /* EarlyVote1Detail.swift */,
 				2F22B39023F0BAB8009DD8ED /* VoteModifyView.swift */,
 				2F22B39423F0C1DD009DD8ED /* Attendee1View.swift */,
+				2F22B39823F0C898009DD8ED /* Alignment1Review.swift */,
+				2F0BAAD423F0EC480044BA0E /* EarlyVoter2View.swift */,
 				2F0BAAD823F0EF4F0044BA0E /* Attendee2View.swift */,
+				2F0BAADC23F0EFEB0044BA0E /* Alignment2Review.swift */,
 				2F0BAB0323F12A800044BA0E /* Assets.xcassets */,
 				2F22B39623F0C28A009DD8ED /* AttendeeVote1Detail.swift */,
 				2F0BAADA23F0EFBF0044BA0E /* AttendeeVote2Detail.swift */,
-				2F22B39823F0C898009DD8ED /* Alignment1Review.swift */,
-				2F0BAADC23F0EFEB0044BA0E /* Alignment2Review.swift */,
-				2F0BAAD423F0EC480044BA0E /* EarlyVoter2View.swift */,
 				2F0BAAD623F0ED0A0044BA0E /* EarlyVote2Detail.swift */,
 				2F22B37D23EF2B8C009DD8ED /* LaunchScreen.storyboard */,
 				2F22B38023EF2B8C009DD8ED /* Info.plist */,
 				2F22B37A23EF2B8C009DD8ED /* Preview Content */,
 				2F22B38623EF301D009DD8ED /* Caucuses.swift */,
 				2F22B38A23F078B0009DD8ED /* Model.swift */,
-				2F22B39223F0BC3F009DD8ED /* ElectionPhase.swift */,
 			);
 			path = CaucusReport;
 			sourceTree = "<group>";

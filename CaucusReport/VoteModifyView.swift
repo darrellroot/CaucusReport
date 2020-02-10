@@ -8,6 +8,8 @@
 
 import SwiftUI
 
+//It is ok to call this with an empty candidate for the
+//totalEarlyVoters and totalAttendee phases
 struct VoteModifyView: View {
     let candidate: String
     let electionPhase: ElectionPhase
@@ -80,6 +82,10 @@ struct VoteModifyView: View {
     
     func modifyTotal(_ amount: Int) {
         switch electionPhase {
+        case .totalEarlyVote:
+            model.totalEarlyVoters += amount
+        case .totalAttendees:
+            model.totalAttendees += amount
         case .earlyVote1:
             model.earlyVote1[candidate] = model.earlyVote1[candidate]! + amount
         case .attendeeVote1:

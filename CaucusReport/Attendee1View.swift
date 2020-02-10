@@ -13,7 +13,7 @@ struct Attendee1View: View {
 
         var body: some View {
             VStack {
-                Text("Do not include early voting if they were entered on the early vote screen")
+                Text("Do not include early voting if they were entered on the early vote screen").font(.headline)
                 List(model.candidates, id: \.self) { candidate in
                     //ForEach(model.candidates, id: \.self) { candidate in
                     HStack {
@@ -24,9 +24,12 @@ struct Attendee1View: View {
                         }
                     }
                 }
-            }.navigationBarTitle("Attendee Align 1 votes", displayMode: .inline)
+            }.navigationBarTitle("Attendee Votes Align 1", displayMode: .inline)
             .navigationBarItems(trailing:
-                NavigationLink(destination: Alignment1Review()) { Text("Align 1 Review") })
+                NavigationLink(destination: Alignment1Review()) { HStack {
+                        Text("Align 1 Review")
+                        Image(systemName: "chevron.right")
+                    } })
 
         }
     }

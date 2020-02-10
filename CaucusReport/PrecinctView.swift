@@ -13,14 +13,17 @@ struct PrecinctView: View {
     
     var body: some View {
         VStack {
-            Text("County:")
-            TextField("County", text: $model.county)
-                .textFieldStyle(RoundedBorderTextFieldStyle())
-            Text("Precinct:")
-            TextField("Precinct", text: $model.precinct)
-                .textFieldStyle(RoundedBorderTextFieldStyle())
-            Spacer()
             HStack {
+                Text("County:")
+                TextField("County", text: $model.county)
+                .textFieldStyle(RoundedBorderTextFieldStyle())
+            }
+            HStack {
+                Text("Precinct:")
+                TextField("Precinct", text: $model.precinct)
+                .textFieldStyle(RoundedBorderTextFieldStyle())
+            }
+            HStack(spacing: 15) {
                 Text("Delegates:")
                 Spacer()
                 Button(action: {
@@ -28,21 +31,30 @@ struct PrecinctView: View {
                 }) {
                     Image(systemName: "minus")
                 }
-                Spacer()
                 Button(action: {
                     self.model.precinctDelegates = self.model.precinctDelegates + 1
                 }) {
                     Image(systemName: "plus")
                 }
-                Spacer()
                 Text("\(model.precinctDelegates)")
-            }.font(.title)
-            Spacer()
+            }
+            VStack {
+                Text("Early Voters \(model.totalEarlyVoters)")
+                VoteModifyView(candidate: "", electionPhase: .totalEarlyVote)
+                Text("Attendee Voters \(model.totalAttendees)")
+                VoteModifyView(candidate: "",electionPhase: .totalAttendees)
+                Spacer()
+                Text("Viability percentage \(model.viabilityPercentage)")
+                Text("Votes required for viability \(model.viability)")
+            }
             
-        }.padding()
-            .navigationBarTitle(Text("Precinct"))
+        }.font(.headline).padding()
+            .navigationBarTitle(Text("Precinct"), displayMode: .inline)
             .navigationBarItems(trailing:
-                NavigationLink(destination: EarlyVoterView()) { Text("Early Voters") })
+                NavigationLink(destination: EarlyVoterView()) { HStack {
+                        Text("Early Voters")
+                        Image(systemName: "chevron.right")
+                    } })
     }
 }
 
