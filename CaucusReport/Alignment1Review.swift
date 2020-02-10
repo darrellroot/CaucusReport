@@ -33,6 +33,13 @@ struct Alignment1Review: View {
             }
         }.alert(isPresented: $showingAlert) {
             Alert(title: Text(alertTitle), message: Text(alertMessage), dismissButton: .default(Text("Ok")))
+        }.onAppear {
+            self.model.saveData()
+            if self.model.align1GrandTotal == 0 {
+                self.alertTitle = "No votes entered"
+                self.alertMessage = "If you don't enter any votes for alignment 1, everyone will appear viable and final delegate calculations will be incorrect."
+                self.showingAlert = true
+            }
         }
         .navigationBarTitle("Align 1 Review", displayMode: .inline)
         .navigationBarItems(trailing: NavigationLink(destination: EarlyVoter2View()) {

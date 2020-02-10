@@ -37,6 +37,13 @@ struct Alignment2Review: View {
             }
         }.alert(isPresented: $showingAlert) {
             Alert(title: Text(alertTitle), message: Text(alertMessage), dismissButton: .default(Text("Ok")))
+        }.onAppear {
+            self.model.saveData()
+            if self.model.align2GrandTotal == 0 {
+                self.alertTitle = "No votes entered"
+                self.alertMessage = "If you don't enter any votes, it looks like a 12-way tie!"
+                self.showingAlert = true
+            }
         }
         .navigationBarTitle("Align 2 Review", displayMode: .inline)
         /*.navigationBarItems(trailing: NavigationLink(destination: EarlyVoter2View()) {

@@ -112,6 +112,17 @@ class Model: ObservableObject, Codable {
 
 extension Model { // everything below here are calculated properties
     
+    func saveData() {
+        let encoder = JSONEncoder()
+        if let encoded = try? encoder.encode(self) {
+            let defaults = UserDefaults.standard
+            defaults.set(encoded, forKey: "SavedModel")
+            debugPrint("saved model")
+        } else {
+            debugPrint("failed to save model")
+        }
+    }
+
     func align1Total(candidate: String) -> Int {
         return (earlyVote1[candidate] ?? 0) + (attendeeVote1[candidate] ?? 0)
     }
@@ -292,12 +303,15 @@ extension Model { // everything below here are calculated properties
         var candidateDelegates: [String: Int] = [:]
         var coinToss: String = "No coin tosses\n"
         
+        if viableCandidates.count == 0 {
+            return "No viable candidates\n"
+        }
         func remainingFactor(candidate: String) -> Double {
             return delegateFactor(candidate: candidate) - Double(candidateDelegates[candidate]!)
         }
         
         func findHighestRemainingFactor() -> [String] {
-            var largestFactor = 0.0
+            var largestFactor =  -1000.0
             var highestCandidates: [String] = []
             for candidate in viableCandidates {
                 if remainingFactor(candidate: candidate) > largestFactor {
@@ -330,6 +344,7 @@ extension Model { // everything below here are calculated properties
                     winnerString = winnerString + " \(winner)"
                 }
                 coinToss = "CoinToss for \(precinctDelegates - usedDelegates) delegates between\(winnerString)\n"
+                usedDelegates = precinctDelegates
             }
         }//while
         var result = ""
