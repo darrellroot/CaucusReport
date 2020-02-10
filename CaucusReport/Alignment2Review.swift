@@ -1,5 +1,5 @@
 //
-//  Alignment1Review.swift
+//  Alignment2Review.swift
 //  CaucusReport
 //
 //  Created by Darrell Root on 2/9/20.
@@ -8,7 +8,7 @@
 
 import SwiftUI
 
-struct Alignment1Review: View {
+struct Alignment2Review: View {
     @EnvironmentObject var model: Model
     @State var showingAlert = false
     @State var alertTitle = ""
@@ -18,29 +18,31 @@ struct Alignment1Review: View {
         VStack {
             VStack(alignment: .leading) {
                 Text("Uncommitted votes do not count for viability")
+                Text("Alignment 1").font(.headline)
                 Text("Total Early Votes \(model.early1GrandTotal)")
                 Text("Total Attendee Votes \(model.attendee1GrandTotal)")
                 Text("Alignment 1 Votes \(model.align1GrandTotal)")
                 Text("Delegates \(model.delegates)")
                 Text("Viability percentage \(model.viabilityPercentage)")
                 Text("Votes required for viability \(model.viability)")
+                Text("Alignment 2 Votes").font(.headline)
             }
-            List(model.candidates, id: \.self) { candidate in
-                Text("\(candidate) \(self.model.earlyVote1[candidate]!)+\(self.model.attendeeVote1[candidate]!)=\(self.model.align1Total(candidate: candidate))").foregroundColor(self.model.viable(candidate: candidate) ? Color.green : Color.red)
+            List(model.viableCandidates, id: \.self) { candidate in
+                Text("\(candidate) \(self.model.earlyVote2[candidate]!)+\(self.model.attendeeVote2[candidate]!)=\(self.model.align2Total(candidate: candidate))")
             }
             Button(action: { self.tweet() }) {
-                Text("Tweet alignment 1 results")
+                Text("Tweet alignment 2 results")
             }
         }.alert(isPresented: $showingAlert) {
             Alert(title: Text(alertTitle), message: Text(alertMessage), dismissButton: .default(Text("Ok")))
         }
-        .navigationBarTitle("Align 1 Review", displayMode: .inline)
-        .navigationBarItems(trailing: NavigationLink(destination: EarlyVoter2View()) {
+        .navigationBarTitle("Align 2 Review", displayMode: .inline)
+        /*.navigationBarItems(trailing: NavigationLink(destination: EarlyVoter2View()) {
             Text("Align 2 Early Vote")
-        })
+        })*/
     }
     func tweet() {
-        if let align1Tweet = model.align1Tweet, let url = URL(string:"twitter://post?message=\(align1Tweet)"), UIApplication.shared.canOpenURL(url) {
+        if let align2Tweet = model.align2Tweet, let url = URL(string:"twitter://post?message=\(align2Tweet)"), UIApplication.shared.canOpenURL(url) {
                   UIApplication.shared.open(url, options: [:],
                   completionHandler: {
                      (success) in
@@ -59,8 +61,8 @@ struct Alignment1Review: View {
         self.showingAlert = true
     }
 }
-struct Alignment1Review_Previews: PreviewProvider {
+/*struct Alignment1Review_Previews: PreviewProvider {
     static var previews: some View {
         Alignment1Review()
     }
-}
+}*/

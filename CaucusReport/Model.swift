@@ -65,6 +65,10 @@ class Model: ObservableObject {
         return (earlyVote1[candidate] ?? 0) + (attendeeVote1[candidate] ?? 0)
     }
     
+    func align2Total(candidate: String) -> Int {
+        return (earlyVote2[candidate] ?? 0) + (attendeeVote2[candidate] ?? 0)
+    }
+    
     var early1GrandTotal: Int {
         var grandTotal = 0
         for candidate in self.candidates {
@@ -73,6 +77,16 @@ class Model: ObservableObject {
             }
         }
         return grandTotal
+    }
+    
+    var viableCandidates: [String] {
+        var result: [String] = []
+        for candidate in candidates {
+            if viable(candidate: candidate) {
+                result.append(candidate)
+            }
+        }
+        return result
     }
 
     var attendee1GrandTotal: Int {
@@ -155,11 +169,28 @@ class Model: ObservableObject {
             } else {
                 output += "\n"
             }
-            output += "#CaucusReportApp\n"
         }
-        
+        output += "#CaucusReportApp\n"
         debugPrint("tweet characters \(output.count)")
         return output.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
     }
+    
+    var align2Tweet: String? {
+        var output: String = ""
+        if self.realMode {
+            output += "#NevadaCaucus Align2\n"
+        } else {
+            output += "#NevadaCaucusTest Align2\n"
+        }
+        output += "County \(county) precinct \(precinct) Delegates \(delegates)\n"
+        for candidate in viableCandidates {
+            output += "\(candidate) \(align2Total(candidate: candidate))"
+        }
+        output += "#CaucusReportApp\n"
+
+        debugPrint("tweet characters \(output.count)")
+        return output.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
+    }
+
     
 }
