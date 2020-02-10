@@ -8,7 +8,7 @@
 
 import Foundation
 
-class Model: ObservableObject {
+class Model: ObservableObject, Codable {
     static let originalCandidates = ["Bennet","Biden","Bloomberg","Buttigieg","Gabbard","Kloubuchar","Patrick","Sanders","Steyer","Warren","Yang", "Uncommitted"]
     
     @Published var realMode = false
@@ -34,32 +34,83 @@ class Model: ObservableObject {
         }
     }
     @Published var attendeeVote1: [String: Int] = [:] {
-           didSet {
-               for key in attendeeVote1.keys {
-                   if attendeeVote1[key]! < 0 {
-                       attendeeVote1[key] = 0
-                   }
-               }
-           }
-       }
+        didSet {
+            for key in attendeeVote1.keys {
+                if attendeeVote1[key]! < 0 {
+                    attendeeVote1[key] = 0
+                }
+            }
+        }
+    }
     @Published var earlyVote2: [String: Int] = [:] {
-           didSet {
-               for key in earlyVote2.keys {
-                   if earlyVote2[key]! < 0 {
-                       earlyVote2[key] = 0
-                   }
-               }
-           }
-       }
+        didSet {
+            for key in earlyVote2.keys {
+                if earlyVote2[key]! < 0 {
+                    earlyVote2[key] = 0
+                }
+            }
+        }
+    }
     @Published var attendeeVote2: [String: Int] = [:] {
-           didSet {
-               for key in attendeeVote2.keys {
-                   if attendeeVote2[key]! < 0 {
-                       attendeeVote2[key] = 0
-                   }
-               }
-           }
-       }
+        didSet {
+            for key in attendeeVote2.keys {
+                if attendeeVote2[key]! < 0 {
+                    attendeeVote2[key] = 0
+                }
+            }
+        }
+    }
+    
+    init() {
+        for candidate in candidates {
+            earlyVote1[candidate] = 0
+            attendeeVote1[candidate] = 0
+            earlyVote2[candidate] = 0
+            attendeeVote2[candidate] = 0
+        }
+    }
+    
+    enum CodingKeys: CodingKey {
+        case realMode
+        case county
+        case precinct
+        case precinctDelegates
+        case candidates
+        case earlyVote1
+        case earlyVote2
+        case attendeeVote1
+        case attendeeVote2
+    }
+
+    required init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        realMode = try container.decode(Bool.self, forKey: .realMode)
+        county = try container.decode(String.self, forKey: .county)
+        precinct = try container.decode(String.self, forKey: .precinct)
+        precinctDelegates = try container.decode(Int.self, forKey: .precinctDelegates)
+        candidates = try container.decode([String].self, forKey: .candidates)
+        earlyVote1 = try container.decode([String: Int].self, forKey: .earlyVote1)
+        earlyVote2 = try container.decode([String: Int].self, forKey: .earlyVote2)
+        attendeeVote1 = try container.decode([String: Int].self, forKey: .attendeeVote1)
+        attendeeVote2 = try container.decode([String: Int].self, forKey: .attendeeVote2)
+    }
+    
+    func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(realMode, forKey: .realMode)
+        try container.encode(county, forKey: .county)
+        try container.encode(precinct, forKey: .precinct)
+        try container.encode(precinctDelegates, forKey: .precinctDelegates)
+        try container.encode(candidates, forKey: .candidates)
+        try container.encode(earlyVote1, forKey: .earlyVote1)
+        try container.encode(earlyVote2, forKey: .earlyVote2)
+        try container.encode(attendeeVote1, forKey: .attendeeVote1)
+        try container.encode(attendeeVote2, forKey: .attendeeVote2)
+        
+    }
+}
+
+extension Model { // everything below here are calculated properties
     
     func align1Total(candidate: String) -> Int {
         return (earlyVote1[candidate] ?? 0) + (attendeeVote1[candidate] ?? 0)
@@ -88,7 +139,7 @@ class Model: ObservableObject {
         }
         return grandTotal
     }
-
+    
     
     var viableCandidates: [String] {
         var result: [String] = []
@@ -99,7 +150,7 @@ class Model: ObservableObject {
         }
         return result
     }
-
+    
     var attendee1GrandTotal: Int {
         var grandTotal = 0
         for candidate in self.candidates {
@@ -119,8 +170,8 @@ class Model: ObservableObject {
         }
         return grandTotal
     }
-
-
+    
+    
     var align1GrandTotal: Int {
         return early1GrandTotal + attendee1GrandTotal
     }
@@ -128,7 +179,6 @@ class Model: ObservableObject {
     var align2GrandTotal: Int {
         return early2GrandTotal + attendee2GrandTotal
     }
-
     
     var viabilityPercentage: Double {
         switch self.precinctDelegates {
@@ -156,14 +206,24 @@ class Model: ObservableObject {
         let doubleViability = (Double(align1GrandTotal) * viabilityPercentage).rounded(.up)
         return Int(doubleViability)
     }
-
-    init() {
+    
+    func reset() {
+        realMode = false
+        county = ""
+        precinct = ""
+        precinctDelegates = 2
+        candidates = Model.originalCandidates
+        attendeeVote1 = [:]
+        earlyVote1 = [:]
+        earlyVote2 = [:]
+        attendeeVote2 = [:]
         for candidate in candidates {
             earlyVote1[candidate] = 0
             attendeeVote1[candidate] = 0
             earlyVote2[candidate] = 0
             attendeeVote2[candidate] = 0
         }
+        
     }
     
     func addCandidate(name: String) {
@@ -215,11 +275,11 @@ class Model: ObservableObject {
         }
         output += calculateDelegates()
         output += "#CaucusReportApp\n"
-
+        
         debugPrint("tweet characters \(output.count)")
         return output.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
     }
-
+    
     func delegateFactor(candidate: String) -> Double {
         guard align1GrandTotal > 0 else { return 0.0 }
         return (Double(align2Total(candidate: candidate)) * Double(precinctDelegates) / Double(align1GrandTotal)).rounded(toPlaces: 4)
@@ -231,11 +291,11 @@ class Model: ObservableObject {
         var usedDelegates = 0
         var candidateDelegates: [String: Int] = [:]
         var coinToss: String = "No coin tosses\n"
-
+        
         func remainingFactor(candidate: String) -> Double {
             return delegateFactor(candidate: candidate) - Double(candidateDelegates[candidate]!)
         }
-
+        
         func findHighestRemainingFactor() -> [String] {
             var largestFactor = 0.0
             var highestCandidates: [String] = []
@@ -249,7 +309,7 @@ class Model: ObservableObject {
             }
             return highestCandidates
         }
-
+        
         for candidate in candidates {
             candidateDelegates[candidate] = 0
         }

@@ -10,20 +10,39 @@ import SwiftUI
 
 struct ContentView: View {
     @EnvironmentObject var model: Model
+    @State var showingAlert = false
+    @State var alertTitle = ""
+    @State var alertMessage = ""
+
     var body: some View {
         NavigationView {
             VStack {
                 VStack(alignment: .leading, spacing: 16) {
-                    Text("This app lets you enter data from a caucus, calculate delegates, and unofficially report them via your Twitter account.")
-                    Text("You must have the Twitter app installed and logged in to generate a report from this device.")
-                    Text("We recommend adding a picture of the caucus venue, preferably with location-services enabled, to your tweet report.  This will increase confidence in the report.")
-                    Text("This version of the app uses Nevada Democratic caucus rules for all calculations.")
+                    Text("This app lets you enter data from a caucus, calculate delegates, and unofficially report them via Twitter.")
+                    Text("You must have the Twitter app installed to generate a report from this device.")
+                    Text("Save a paper copy of all data.")
+                    Text("This app uses Nevada Democratic caucus rules for all calculations.")
                 }
                 Spacer()
                 Toggle(isOn: $model.realMode) {
                     (model.realMode ? Text("Real election mode") : Text("Test mode"))
                 }
+                Spacer()
+                Button(action: {
+                    self.model.reset()
+                    self.alertTitle = "Data Reset"
+                    self.alertMessage = ""
+                    self.showingAlert = true
+                }) {
+                    Text("RESET ALL DATA AND START OVER").font(.headline).multilineTextAlignment(.center)
+                }.padding(EdgeInsets(top:12, leading: 20, bottom: 12, trailing: 20))
+                    .foregroundColor(Color.black)
+                    .background(Color.red).cornerRadius(.infinity)
             }.padding()
+                .alert(isPresented: $showingAlert) {
+                    Alert(title: Text(alertTitle), message: Text(alertMessage), dismissButton: .default(Text("Ok")))
+                }
+
             .navigationBarTitle(Text("Caucus Report"))
             .navigationBarItems(trailing:
                 NavigationLink(destination: PrecinctView()) { Text("Precinct") })
