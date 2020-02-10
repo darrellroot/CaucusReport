@@ -85,6 +85,7 @@
 				2F22B39023F0BAB8009DD8ED /* VoteModifyView.swift */,
 				2F22B39423F0C1DD009DD8ED /* Attendee1View.swift */,
 				2F22B39623F0C28A009DD8ED /* AttendeeVote1Detail.swift */,
+				2F22B39823F0C898009DD8ED /* Alignment1Review.swift */,
 				2F22B37823EF2B8C009DD8ED /* Assets.xcassets */,
 				2F22B37D23EF2B8C009DD8ED /* LaunchScreen.storyboard */,
 				2F22B38023EF2B8C009DD8ED /* Info.plist */,
@@ -92,7 +93,6 @@
 				2F22B38623EF301D009DD8ED /* Caucuses.swift */,
 				2F22B38A23F078B0009DD8ED /* Model.swift */,
 				2F22B39223F0BC3F009DD8ED /* ElectionPhase.swift */,
-				2F22B39823F0C898009DD8ED /* Alignment1Review.swift */,
 			);
 			path = CaucusReport;
 			sourceTree = "<group>";

@@ -137,4 +137,29 @@ class Model: ObservableObject {
         }
     }
     
+    var align1Tweet: String? {
+        var output: String = ""
+        if self.realMode {
+            output += "#NevadaCaucus Align1\n"
+        } else {
+            output += "#NevadaCaucusTest Align1\n"
+        }
+        output += "County \(county) precinct \(precinct) Delegates \(delegates)\n"
+        for candidate in candidates {
+            if align1Total(candidate: candidate) == 0 {
+                continue
+            }
+            output += "\(candidate) \(align1Total(candidate: candidate))"
+            if viable(candidate: candidate) {
+                output += " viable\n"
+            } else {
+                output += "\n"
+            }
+            output += "#CaucusReportApp\n"
+        }
+        
+        debugPrint("tweet characters \(output.count)")
+        return output.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
+    }
+    
 }
