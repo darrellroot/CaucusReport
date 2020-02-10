@@ -11,6 +11,7 @@ import SwiftUI
 struct PrecinctView: View {
     @EnvironmentObject var model: Model
     
+    
     var body: some View {
         VStack {
             HStack {
@@ -44,15 +45,14 @@ struct PrecinctView: View {
                 Text("Attendee Voters \(model.totalAttendees)")
                 VoteModifyView(candidate: "",electionPhase: .totalAttendees)
                 Spacer()
-                Text("Viability percentage \(model.viabilityPercentage)")
-                Text("Votes required for viability \(model.viability)")
+
             }
             
         }.font(.headline).padding()
             .navigationBarTitle(Text("Precinct"), displayMode: .inline)
             .navigationBarItems(trailing:
-                NavigationLink(destination: EarlyVoterView()) { HStack {
-                        Text("Early Voters")
+                NavigationLink(destination: EarlyVoter1View()) { HStack {
+                        Text("Early Vote1 ")
                         Image(systemName: "chevron.right")
                     } })
     }

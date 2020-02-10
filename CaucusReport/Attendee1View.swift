@@ -13,21 +13,20 @@ struct Attendee1View: View {
 
         var body: some View {
             VStack {
-                Text("Do not include early voting if they were entered on the early vote screen").font(.headline)
+                Text("Do not include early voting if they were entered on the early vote screen").font(.headline).padding(.top)
                 List(model.candidates, id: \.self) { candidate in
-                    //ForEach(model.candidates, id: \.self) { candidate in
                     HStack {
                         NavigationLink(destination: AttendeeVote1Detail(candidate: candidate)) {
                             Text(candidate)
                             Spacer()
                             Text("\(self.model.attendeeVote1[candidate]!)")
-                        }
+                        }.foregroundColor(self.model.viable1(candidate: candidate) ? Color.blue : Color.red)
                     }
                 }
-            }.navigationBarTitle("Attendee Votes Align 1", displayMode: .inline)
+            }.navigationBarTitle("Attendee Vote 1", displayMode: .inline)
             .navigationBarItems(trailing:
                 NavigationLink(destination: Alignment1Review()) { HStack {
-                        Text("Align 1 Review")
+                        Text("Review 1")
                         Image(systemName: "chevron.right")
                     } })
 

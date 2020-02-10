@@ -8,33 +8,35 @@
 
 import SwiftUI
 
-struct EarlyVoterView: View {
+struct EarlyVoter1View: View {
     @EnvironmentObject var model: Model
 
     var body: some View {
         VStack {
+            Text("Total precinct voters \(model.totalRegistrations)").padding(.top)
+            Text("Viability percentage \(model.viabilityPercentage)")
+            Text("Votes required for viability \(model.viability)")
             List(model.candidates, id: \.self) { candidate in
-                //ForEach(model.candidates, id: \.self) { candidate in
                 HStack {
                     NavigationLink(destination: EarlyVote1Detail(candidate: candidate)) {
                         Text(candidate)
                         Spacer()
                         Text("\(self.model.earlyVote1[candidate]!)")
-                    }
+                    }.foregroundColor(self.model.viable1(candidate: candidate) ? Color.blue : Color.red)
                 }
             }
-        }.navigationBarTitle("Early Vote Align 1")
+        }.navigationBarTitle("Early Vote 1")
         .navigationBarItems(trailing:
             NavigationLink(destination: Attendee1View()) { HStack {
-                    Text("Attend Align 1")
+                    Text("Attendee 1")
                     Image(systemName: "chevron.right")
                 } })
 
     }
 }
 
-struct EarlyVoterView_Previews: PreviewProvider {
+struct EarlyVoter1View_Previews: PreviewProvider {
     static var previews: some View {
-        EarlyVoterView()
+        EarlyVoter1View()
     }
 }

@@ -17,8 +17,7 @@ struct Alignment1Review: View {
     var body: some View {
         VStack {
             VStack(alignment: .leading) {
-                Text("Uncommitted votes do not count for viability")
-                Text("Total Early Votes \(model.totalEarlyVoters)")
+                Text("Total Early Votes \(model.totalEarlyVoters)").padding(.top)
                 Text("Early Votes Recorded \(model.early1GrandTotal)")
                 Text("Total Attendees \(model.totalAttendees)")
                 Text("Attendee Votes Recorded \(model.attendee1GrandTotal)")
@@ -28,7 +27,7 @@ struct Alignment1Review: View {
                 Text("Votes required for viability \(model.viability)")
             }
             List(model.candidates, id: \.self) { candidate in
-                Text("\(candidate) \(self.model.earlyVote1[candidate]!)+\(self.model.attendeeVote1[candidate]!)=\(self.model.align1Total(candidate: candidate))").foregroundColor(self.model.viable(candidate: candidate) ? Color.green : Color.red)
+                Text("\(candidate) \(self.model.earlyVote1[candidate]!)+\(self.model.attendeeVote1[candidate]!)=\(self.model.align1Total(candidate: candidate))").foregroundColor(self.model.viable1(candidate: candidate) ? Color.blue : Color.red)
             }
             Button(action: { self.tweet() }) {
                 Text("Tweet alignment 1 results")
@@ -37,16 +36,16 @@ struct Alignment1Review: View {
             Alert(title: Text(alertTitle), message: Text(alertMessage), dismissButton: .default(Text("Ok")))
         }.onAppear {
             self.model.saveData()
-            if self.model.align1GrandTotal == 0 {
-                self.alertTitle = "No votes entered"
-                self.alertMessage = "If you don't enter any votes for alignment 1, everyone will appear viable and final delegate calculations will be incorrect."
+            if self.model.totalAttendees == 0 && self.model.totalEarlyVoters == 0 {
+                self.alertTitle = "No voters entered"
+                self.alertMessage = "If you don't enter the number of early voters and attendees on the Precinct page, everyone will appear viable and final delegate calculations will be incorrect."
                 self.showingAlert = true
             }
         }
         .navigationBarTitle("Align 1 Review", displayMode: .inline)
         .navigationBarItems(trailing: NavigationLink(destination: EarlyVoter2View()) {
             HStack {
-                Text("Align 2 Early Vote")
+                Text("Early Vote 2")
                 Image(systemName: "chevron.right")
             }
         })

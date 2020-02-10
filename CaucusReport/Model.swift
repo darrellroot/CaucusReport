@@ -9,7 +9,7 @@
 import Foundation
 
 class Model: ObservableObject, Codable {
-    static let originalCandidates = ["Bennet","Biden","Bloomberg","Booker","Buttigieg","Delaney","Gabbard","Kloubuchar","Patrick","Sanders","Steyer","Warren","Williamson","Yang","Uncommitted"]
+    static let originalCandidates = ["Bennet","Biden","Bloomberg","Booker","Buttigieg","Delaney","Gabbard","Kloubuchar","Patrick","Sanders","Steyer","Warren","Williamson","Yang","Uncommitted","Write-Ins"]
     
     @Published var realMode = false
     @Published var county: String = ""
@@ -63,6 +63,7 @@ class Model: ObservableObject, Codable {
         }
     }
     
+
     init() {
         for candidate in candidates {
             earlyVote1[candidate] = 0
@@ -78,6 +79,8 @@ class Model: ObservableObject, Codable {
         case precinct
         case precinctDelegates
         case candidates
+        case totalAttendees
+        case totalEarlyVoters
         case earlyVote1
         case earlyVote2
         case attendeeVote1
@@ -91,6 +94,8 @@ class Model: ObservableObject, Codable {
         precinct = try container.decode(String.self, forKey: .precinct)
         precinctDelegates = try container.decode(Int.self, forKey: .precinctDelegates)
         candidates = try container.decode([String].self, forKey: .candidates)
+        totalAttendees = try container.decode(Int.self, forKey: .totalAttendees)
+        totalEarlyVoters = try container.decode(Int.self, forKey: .totalEarlyVoters)
         earlyVote1 = try container.decode([String: Int].self, forKey: .earlyVote1)
         earlyVote2 = try container.decode([String: Int].self, forKey: .earlyVote2)
         attendeeVote1 = try container.decode([String: Int].self, forKey: .attendeeVote1)
@@ -103,6 +108,8 @@ class Model: ObservableObject, Codable {
         try container.encode(county, forKey: .county)
         try container.encode(precinct, forKey: .precinct)
         try container.encode(precinctDelegates, forKey: .precinctDelegates)
+        try container.encode(totalAttendees, forKey: .totalAttendees)
+        try container.encode(totalEarlyVoters, forKey: .totalEarlyVoters)
         try container.encode(candidates, forKey: .candidates)
         try container.encode(earlyVote1, forKey: .earlyVote1)
         try container.encode(earlyVote2, forKey: .earlyVote2)
@@ -123,6 +130,15 @@ extension Model { // everything below here are calculated properties
         } else {
             debugPrint("failed to save model")
         }
+    }
+
+    var totalRegistrations: Int {
+        return totalAttendees + totalEarlyVoters
+    }
+    
+    var viability: Int {
+        let doubleViability = (Double(totalAttendees + totalEarlyVoters) * viabilityPercentage).rounded(.up)
+        return Int(doubleViability)
     }
 
     func align1Total(candidate: String) -> Int {
@@ -167,9 +183,7 @@ extension Model { // everything below here are calculated properties
     var attendee1GrandTotal: Int {
         var grandTotal = 0
         for candidate in self.candidates {
-            if candidate != "Uncommitted" {
-                grandTotal = grandTotal + (attendeeVote1[candidate] ?? 0)
-            }
+            grandTotal = grandTotal + (attendeeVote1[candidate] ?? 0)
         }
         return grandTotal
     }
@@ -177,9 +191,7 @@ extension Model { // everything below here are calculated properties
     var attendee2GrandTotal: Int {
         var grandTotal = 0
         for candidate in self.candidates {
-            if candidate != "Uncommitted" {
-                grandTotal = grandTotal + (attendeeVote2[candidate] ?? 0)
-            }
+            grandTotal = grandTotal + (attendeeVote2[candidate] ?? 0)
         }
         return grandTotal
     }
@@ -222,19 +234,17 @@ extension Model { // everything below here are calculated properties
         }
     }
     
-    var viability: Int {
-        let doubleViability = (Double(align1GrandTotal) * viabilityPercentage).rounded(.up)
-        return Int(doubleViability)
-    }
     
     func reset() {
         realMode = false
         county = ""
         precinct = ""
         precinctDelegates = 2
+        totalAttendees = 0
+        totalEarlyVoters = 0
         candidates = Model.originalCandidates
-        attendeeVote1 = [:]
         earlyVote1 = [:]
+        attendeeVote1 = [:]
         earlyVote2 = [:]
         attendeeVote2 = [:]
         for candidate in candidates {
@@ -271,7 +281,7 @@ extension Model { // everything below here are calculated properties
                 continue
             }
             output += "\(candidate) \(align1Total(candidate: candidate))"
-            if viable(candidate: candidate) {
+            if viable1(candidate: candidate) {
                 output += " viable\n"
             } else {
                 output += "\n"
@@ -290,6 +300,7 @@ extension Model { // everything below here are calculated properties
             output += "#NevadaCaucusTest Align2\n"
         }
         output += "County \(county) Precinct \(precinct) Delegates \(precinctDelegates)\n"
+        output += "VOTES\n"
         for candidate in viableCandidates {
             output += "\(candidate) \(align2Total(candidate: candidate))\n"
         }
@@ -356,9 +367,9 @@ extension Model { // everything below here are calculated properties
                 usedDelegates = precinctDelegates
             }
         }//while
-        var result = ""
+        var result = "DELEGATES\n"
         for candidate in viableCandidates {
-            result += "\(candidate) \(candidateDelegates[candidate]!) delegates\n"
+            result += "\(candidate) \(candidateDelegates[candidate]!)\n"
         }
         result += coinToss
         return result

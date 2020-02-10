@@ -17,7 +17,7 @@ struct Alignment2Review: View {
     var body: some View {
         VStack {
             VStack(alignment: .leading) {
-                Text("Total Align1 Votes=\(model.early1GrandTotal)+\(model.attendee1GrandTotal)=\(model.align1GrandTotal)")
+                Text("Total Align1 Votes=\(model.early1GrandTotal)+\(model.attendee1GrandTotal)=\(model.align1GrandTotal)").padding(.top)
                 Text("Total Align2 Votes=\(model.early2GrandTotal)+\(model.attendee2GrandTotal)=\(model.align2GrandTotal)")
                 Text("Total early and attendee registrations \(model.align1GrandTotal)")
                 Text("Delegates \(model.precinctDelegates)")
@@ -30,7 +30,7 @@ struct Alignment2Review: View {
                     Text("\(candidate) \(self.model.earlyVote2[candidate]!)+\(self.model.attendeeVote2[candidate]!)=\(self.model.align2Total(candidate: candidate))")
                     Spacer()
                     Text("\(self.model.delegateFactor(candidate: candidate))")
-                }
+                }.foregroundColor(self.model.viable2(candidate: candidate) ? Color.blue : Color.red)
             }
             Text(model.calculateDelegates())
             Button(action: { self.tweet() }) {

@@ -15,9 +15,9 @@ struct AttendeeVote2Detail: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 20) {
             Spacer()
-            Text("Attendee votes for candidate \(candidate) during second alignment.  Do not include early voting if they were entered on early voting screen.")
+            Text("Attendee votes for candidate \(candidate) during second alignment.  Do not include early voting if they were entered on early voting screen.").padding(.top)
             Spacer()
-            Text("Votes: \(model.attendeeVote2[self.candidate]!)")
+            Text("Votes: \(model.attendeeVote2[self.candidate]!)").foregroundColor(self.model.viable2(candidate: candidate) ? Color.blue : Color.red)
             Spacer()
             VoteModifyView(candidate: candidate, electionPhase: .attendeeVote2)
         }.padding()

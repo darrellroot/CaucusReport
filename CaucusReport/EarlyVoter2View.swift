@@ -13,21 +13,21 @@ struct EarlyVoter2View: View {
 
     var body: some View {
             VStack {
-                Text("Early votes for alignment 2, make sure to reassign based on viability")
+                Text("Early votes for alignment 2, make sure to reassign based on viability").padding(.top)
                 List(model.candidates, id: \.self) { candidate in
                     HStack {
                         NavigationLink(destination: EarlyVote2Detail(candidate: candidate)) {
                             Text(candidate)
                             Spacer()
                             Text("\(self.model.earlyVote2[candidate]!)")
-                        }
+                        }.foregroundColor(self.model.viable2(candidate: candidate) ? Color.blue : Color.red)
                     }
                 }
-            }.navigationBarTitle("Early Vote Align 2")
+            }.navigationBarTitle("Early Vote 2")
             .navigationBarItems(trailing:
                 NavigationLink(destination: Attendee2View()) {
                     HStack {
-                        Text("Attendee Align 2")
+                        Text("Attendee 2")
                         Image(systemName: "chevron.right")
                     } })
 

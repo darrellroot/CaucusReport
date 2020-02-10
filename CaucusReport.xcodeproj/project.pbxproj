@@ -20,7 +20,7 @@
 		2F22B37C23EF2B8C009DD8ED /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2F22B37B23EF2B8C009DD8ED /* Preview Assets.xcassets */; };
 		2F22B37F23EF2B8C009DD8ED /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2F22B37D23EF2B8C009DD8ED /* LaunchScreen.storyboard */; };
 		2F22B38723EF301D009DD8ED /* Caucuses.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F22B38623EF301D009DD8ED /* Caucuses.swift */; };
-		2F22B38923EFC2F2009DD8ED /* EarlyVoterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F22B38823EFC2F2009DD8ED /* EarlyVoterView.swift */; };
+		2F22B38923EFC2F2009DD8ED /* EarlyVoter1View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F22B38823EFC2F2009DD8ED /* EarlyVoter1View.swift */; };
 		2F22B38B23F078B0009DD8ED /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F22B38A23F078B0009DD8ED /* Model.swift */; };
 		2F22B38D23F08852009DD8ED /* PrecinctView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F22B38C23F08852009DD8ED /* PrecinctView.swift */; };
 		2F22B38F23F0B57C009DD8ED /* EarlyVote1Detail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F22B38E23F0B57C009DD8ED /* EarlyVote1Detail.swift */; };
@@ -47,7 +47,7 @@
 		2F22B37E23EF2B8C009DD8ED /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		2F22B38023EF2B8C009DD8ED /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2F22B38623EF301D009DD8ED /* Caucuses.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Caucuses.swift; sourceTree = "<group>"; };
-		2F22B38823EFC2F2009DD8ED /* EarlyVoterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EarlyVoterView.swift; sourceTree = "<group>"; };
+		2F22B38823EFC2F2009DD8ED /* EarlyVoter1View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EarlyVoter1View.swift; sourceTree = "<group>"; };
 		2F22B38A23F078B0009DD8ED /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
 		2F22B38C23F08852009DD8ED /* PrecinctView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrecinctView.swift; sourceTree = "<group>"; };
 		2F22B38E23F0B57C009DD8ED /* EarlyVote1Detail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EarlyVote1Detail.swift; sourceTree = "<group>"; };
@@ -110,18 +110,18 @@
 				2F22B37423EF2B88009DD8ED /* SceneDelegate.swift */,
 				2F22B37623EF2B88009DD8ED /* ContentView.swift */,
 				2F22B38C23F08852009DD8ED /* PrecinctView.swift */,
-				2F22B38823EFC2F2009DD8ED /* EarlyVoterView.swift */,
+				2F22B38823EFC2F2009DD8ED /* EarlyVoter1View.swift */,
 				2F22B38E23F0B57C009DD8ED /* EarlyVote1Detail.swift */,
 				2F22B39023F0BAB8009DD8ED /* VoteModifyView.swift */,
 				2F22B39423F0C1DD009DD8ED /* Attendee1View.swift */,
+				2F22B39623F0C28A009DD8ED /* AttendeeVote1Detail.swift */,
 				2F22B39823F0C898009DD8ED /* Alignment1Review.swift */,
 				2F0BAAD423F0EC480044BA0E /* EarlyVoter2View.swift */,
+				2F0BAAD623F0ED0A0044BA0E /* EarlyVote2Detail.swift */,
 				2F0BAAD823F0EF4F0044BA0E /* Attendee2View.swift */,
+				2F0BAADA23F0EFBF0044BA0E /* AttendeeVote2Detail.swift */,
 				2F0BAADC23F0EFEB0044BA0E /* Alignment2Review.swift */,
 				2F0BAB0323F12A800044BA0E /* Assets.xcassets */,
-				2F22B39623F0C28A009DD8ED /* AttendeeVote1Detail.swift */,
-				2F0BAADA23F0EFBF0044BA0E /* AttendeeVote2Detail.swift */,
-				2F0BAAD623F0ED0A0044BA0E /* EarlyVote2Detail.swift */,
 				2F22B37D23EF2B8C009DD8ED /* LaunchScreen.storyboard */,
 				2F22B38023EF2B8C009DD8ED /* Info.plist */,
 				2F22B37A23EF2B8C009DD8ED /* Preview Content */,
@@ -210,7 +210,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2F22B38923EFC2F2009DD8ED /* EarlyVoterView.swift in Sources */,
+				2F22B38923EFC2F2009DD8ED /* EarlyVoter1View.swift in Sources */,
 				2F0BAAE023F0F5010044BA0E /* Double-Rounded.swift in Sources */,
 				2F22B37323EF2B88009DD8ED /* AppDelegate.swift in Sources */,
 				2F22B38723EF301D009DD8ED /* Caucuses.swift in Sources */,

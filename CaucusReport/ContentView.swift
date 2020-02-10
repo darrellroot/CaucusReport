@@ -22,6 +22,7 @@ struct ContentView: View {
                     Text("You must have the Twitter app installed to generate a report from this device.")
                     Text("Save a paper copy of all data.")
                     Text("This app uses Nevada Democratic caucus rules for all calculations.")
+                    Text("This app is not associated with the Nevada Democratic Party")
                 }
                 Spacer()
                 Toggle(isOn: $model.realMode) {
@@ -35,9 +36,9 @@ struct ContentView: View {
                     self.showingAlert = true
                 }) {
                     Text("RESET ALL DATA AND START OVER").font(.headline).multilineTextAlignment(.center)
-                }.padding(EdgeInsets(top:12, leading: 20, bottom: 12, trailing: 20))
-                    .foregroundColor(Color.black)
-                    .background(Color.red).cornerRadius(.infinity)
+                }.padding()
+                .foregroundColor(Color.black)
+                .background(Color.red).cornerRadius(.infinity)
             }.padding()
                 .alert(isPresented: $showingAlert) {
                     Alert(title: Text(alertTitle), message: Text(alertMessage), dismissButton: .default(Text("Ok")))

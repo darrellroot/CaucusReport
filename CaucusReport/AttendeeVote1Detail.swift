@@ -17,7 +17,7 @@ struct AttendeeVote1Detail: View {
             Spacer()
             Text("Attendee votes for candidate \(candidate) during first alignment.  Do not include early voting if they were entered on early voting screen.")
             Spacer()
-            Text("Votes: \(model.attendeeVote1[self.candidate]!)")
+            Text("Votes: \(model.attendeeVote1[self.candidate]!)").foregroundColor(self.model.viable1(candidate: candidate) ? Color.blue : Color.red)
             Spacer()
             VoteModifyView(candidate: candidate, electionPhase: .attendeeVote1)
         }.padding()
