@@ -17,19 +17,21 @@ struct Alignment2Review: View {
     var body: some View {
         VStack {
             VStack(alignment: .leading) {
-                Text("Uncommitted votes do not count for viability")
-                Text("Alignment 1").font(.headline)
-                Text("Total Early Votes \(model.early1GrandTotal)")
-                Text("Total Attendee Votes \(model.attendee1GrandTotal)")
-                Text("Alignment 1 Votes \(model.align1GrandTotal)")
-                Text("Delegates \(model.delegates)")
+                Text("Total Align1 Votes=\(model.early1GrandTotal)+\(model.attendee1GrandTotal)=\(model.align1GrandTotal)")
+                Text("Total Align2 Votes=\(model.early2GrandTotal)+\(model.attendee2GrandTotal)=\(model.align2GrandTotal)")
+                Text("Delegates \(model.precinctDelegates)")
                 Text("Viability percentage \(model.viabilityPercentage)")
                 Text("Votes required for viability \(model.viability)")
                 Text("Alignment 2 Votes").font(.headline)
             }
             List(model.viableCandidates, id: \.self) { candidate in
-                Text("\(candidate) \(self.model.earlyVote2[candidate]!)+\(self.model.attendeeVote2[candidate]!)=\(self.model.align2Total(candidate: candidate))")
+                HStack {
+                    Text("\(candidate) \(self.model.earlyVote2[candidate]!)+\(self.model.attendeeVote2[candidate]!)=\(self.model.align2Total(candidate: candidate))")
+                    Spacer()
+                    Text("\(self.model.delegateFactor(candidate: candidate))")
+                }
             }
+            Text(model.calculateDelegates())
             Button(action: { self.tweet() }) {
                 Text("Tweet alignment 2 results")
             }

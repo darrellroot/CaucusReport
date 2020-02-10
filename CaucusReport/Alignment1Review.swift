@@ -21,7 +21,7 @@ struct Alignment1Review: View {
                 Text("Total Early Votes \(model.early1GrandTotal)")
                 Text("Total Attendee Votes \(model.attendee1GrandTotal)")
                 Text("Alignment 1 Votes \(model.align1GrandTotal)")
-                Text("Delegates \(model.delegates)")
+                Text("Delegates \(model.precinctDelegates)")
                 Text("Viability percentage \(model.viabilityPercentage)")
                 Text("Votes required for viability \(model.viability)")
             }

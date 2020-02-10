@@ -24,18 +24,18 @@ struct PrecinctView: View {
                 Text("Delegates:")
                 Spacer()
                 Button(action: {
-                    self.model.delegates = self.model.delegates - 1
+                    self.model.precinctDelegates = self.model.precinctDelegates - 1
                 }) {
                     Image(systemName: "minus")
                 }
                 Spacer()
                 Button(action: {
-                    self.model.delegates = self.model.delegates + 1
+                    self.model.precinctDelegates = self.model.precinctDelegates + 1
                 }) {
                     Image(systemName: "plus")
                 }
                 Spacer()
-                Text("\(model.delegates)")
+                Text("\(model.precinctDelegates)")
             }.font(.title)
             Spacer()
             

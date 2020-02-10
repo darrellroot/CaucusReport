@@ -14,10 +14,10 @@ class Model: ObservableObject {
     @Published var realMode = false
     @Published var county: String = ""
     @Published var precinct: String = ""
-    @Published var delegates: Int = 2 {
+    @Published var precinctDelegates: Int = 2 {
         didSet {
-            if delegates < 2 {
-                delegates = 2
+            if precinctDelegates < 2 {
+                precinctDelegates = 2
             }
         }
     }
@@ -79,6 +79,17 @@ class Model: ObservableObject {
         return grandTotal
     }
     
+    var early2GrandTotal: Int {
+        var grandTotal = 0
+        for candidate in self.candidates {
+            if candidate != "Uncommitted" {
+                grandTotal = grandTotal + (earlyVote2[candidate] ?? 0)
+            }
+        }
+        return grandTotal
+    }
+
+    
     var viableCandidates: [String] {
         var result: [String] = []
         for candidate in candidates {
@@ -98,13 +109,29 @@ class Model: ObservableObject {
         }
         return grandTotal
     }
+    
+    var attendee2GrandTotal: Int {
+        var grandTotal = 0
+        for candidate in self.candidates {
+            if candidate != "Uncommitted" {
+                grandTotal = grandTotal + (attendeeVote2[candidate] ?? 0)
+            }
+        }
+        return grandTotal
+    }
+
 
     var align1GrandTotal: Int {
         return early1GrandTotal + attendee1GrandTotal
     }
     
+    var align2GrandTotal: Int {
+        return early2GrandTotal + attendee2GrandTotal
+    }
+
+    
     var viabilityPercentage: Double {
-        switch self.delegates {
+        switch self.precinctDelegates {
         case 2:
             return 0.25
         case 3:
@@ -158,7 +185,7 @@ class Model: ObservableObject {
         } else {
             output += "#NevadaCaucusTest Align1\n"
         }
-        output += "County \(county) precinct \(precinct) Delegates \(delegates)\n"
+        output += "County \(county) precinct \(precinct) Delegates \(precinctDelegates)\n"
         for candidate in candidates {
             if align1Total(candidate: candidate) == 0 {
                 continue
@@ -182,15 +209,74 @@ class Model: ObservableObject {
         } else {
             output += "#NevadaCaucusTest Align2\n"
         }
-        output += "County \(county) precinct \(precinct) Delegates \(delegates)\n"
+        output += "County \(county) Precinct \(precinct) Delegates \(precinctDelegates)\n"
         for candidate in viableCandidates {
-            output += "\(candidate) \(align2Total(candidate: candidate))"
+            output += "\(candidate) \(align2Total(candidate: candidate))\n"
         }
+        output += calculateDelegates()
         output += "#CaucusReportApp\n"
 
         debugPrint("tweet characters \(output.count)")
         return output.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
     }
 
+    func delegateFactor(candidate: String) -> Double {
+        guard align1GrandTotal > 0 else { return 0.0 }
+        return (Double(align2Total(candidate: candidate)) * Double(precinctDelegates) / Double(align1GrandTotal)).rounded(toPlaces: 4)
+    }
     
+    
+    func calculateDelegates() -> String {
+        
+        var usedDelegates = 0
+        var candidateDelegates: [String: Int] = [:]
+        var coinToss: String = "No coin tosses\n"
+
+        func remainingFactor(candidate: String) -> Double {
+            return delegateFactor(candidate: candidate) - Double(candidateDelegates[candidate]!)
+        }
+
+        func findHighestRemainingFactor() -> [String] {
+            var largestFactor = 0.0
+            var highestCandidates: [String] = []
+            for candidate in viableCandidates {
+                if remainingFactor(candidate: candidate) > largestFactor {
+                    largestFactor = remainingFactor(candidate: candidate)
+                    highestCandidates = [candidate]
+                } else if remainingFactor(candidate: candidate) == largestFactor {
+                    highestCandidates.append(candidate)
+                }
+            }
+            return highestCandidates
+        }
+
+        for candidate in candidates {
+            candidateDelegates[candidate] = 0
+        }
+        for candidate in viableCandidates {
+            candidateDelegates[candidate] = candidateDelegates[candidate]! + 1
+            usedDelegates = usedDelegates + 1
+        }
+        while usedDelegates < precinctDelegates {
+            let nextWinners: [String] = findHighestRemainingFactor()
+            if nextWinners.count <= (precinctDelegates - usedDelegates) {
+                for winner in nextWinners {
+                    candidateDelegates[winner] = candidateDelegates[winner]! + 1
+                    usedDelegates = usedDelegates + 1
+                }
+            } else { //nextWinners.count > remaining delegates
+                var winnerString = ""
+                for winner in nextWinners {
+                    winnerString = winnerString + " \(winner)"
+                }
+                coinToss = "CoinToss for \(precinctDelegates - usedDelegates) delegates between\(winnerString)\n"
+            }
+        }//while
+        var result = ""
+        for candidate in viableCandidates {
+            result += "\(candidate) \(candidateDelegates[candidate]!) delegates\n"
+        }
+        result += coinToss
+        return result
+    }
 }
