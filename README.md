@@ -1,6 +1,6 @@
 # CaucusReport
 
-The "Caucus Report" app is available in the iOS App Store for iPhone only.  US Store only.  In the interests of election transparency I am also making it #OpenSource.
+The "Caucus Report" app is available in the iOS App Store for iPhone only.  US Store only.  In the interests of election transparency it is now #OpenSource.
 
 The "Caucus Report" app allows Nevada Democratic Caucus Goers to input vote totals, calculate viability threshold, calculate delegates, and Tweet unofficial results.
 
