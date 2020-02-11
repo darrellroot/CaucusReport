@@ -14,6 +14,7 @@ struct EarlyVoter1View: View {
     var body: some View {
         VStack {
             Text("Total precinct voters \(model.totalRegistrations)").padding(.top)
+            Text("Precinct delegates \(model.precinctDelegates)")
             Text("Viability percentage \(model.viabilityPercentage)")
             Text("Votes required for viability \(model.viability)")
             List(model.candidates, id: \.self) { candidate in

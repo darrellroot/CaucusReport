@@ -21,8 +21,20 @@ class Model: ObservableObject, Codable {
             }
         }
     }
-    @Published var totalAttendees = 0
-    @Published var totalEarlyVoters = 0
+    @Published var totalAttendees = 0 {
+        didSet {
+            if totalAttendees < 0 {
+                totalAttendees = 0
+            }
+        }
+    }
+    @Published var totalEarlyVoters = 0 {
+        didSet {
+            if totalEarlyVoters < 0 {
+                totalEarlyVoters = 0
+            }
+        }
+    }
     
     @Published var candidates = Model.originalCandidates
     
