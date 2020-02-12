@@ -19,7 +19,7 @@ struct Alignment2Review: View {
             VStack(alignment: .leading) {
                 Text("Total Align1 Votes=\(model.early1GrandTotal)+\(model.attendee1GrandTotal)=\(model.align1GrandTotal)").padding(.top)
                 Text("Total Align2 Votes=\(model.early2GrandTotal)+\(model.attendee2GrandTotal)=\(model.align2GrandTotal)")
-                Text("Total early and attendee registrations \(model.align1GrandTotal)")
+                Text("Total early and attendee registrations \(model.totalRegistrations)")
                 Text("Delegates \(model.precinctDelegates)")
                 Text("Viability percentage \(model.viabilityPercentage)")
                 Text("Votes required for viability \(model.viability)")
@@ -29,13 +29,17 @@ struct Alignment2Review: View {
                 HStack {
                     Text("\(candidate) \(self.model.earlyVote2[candidate]!)+\(self.model.attendeeVote2[candidate]!)=\(self.model.align2Total(candidate: candidate))")
                     Spacer()
-                    Text("\(self.model.delegateFactor(candidate: candidate))")
+                    Text(String(format: "%.4f",self.model.delegateFactor(candidate: candidate)))
+                    //Text("\(self.model.delegateFactor(candidate: candidate))")
                 }.foregroundColor(self.model.viable2(candidate: candidate) ? Color.blue : Color.red)
             }
-            Text(model.calculateDelegates())
-            Button(action: { self.tweet() }) {
+            model.validResult ? Text(model.delegateMessage()) : Text("INVALID DATA DETECTED\nFix registrations on precinct screen or alignment 2 votes")
+            model.validResult ? Button(action: { self.tweet() }) {
                 Text("Tweet alignment 2 results")
-            }
+                } :
+                Button(action: { }) {
+                    Text("Fix invalid data before tweeting")
+                }
         }.alert(isPresented: $showingAlert) {
             Alert(title: Text(alertTitle), message: Text(alertMessage), dismissButton: .default(Text("Ok")))
         }.onAppear {
@@ -43,6 +47,11 @@ struct Alignment2Review: View {
             if self.model.align2GrandTotal == 0 {
                 self.alertTitle = "No votes entered"
                 self.alertMessage = "If you don't enter any votes, it looks like a 12-way tie!"
+                self.showingAlert = true
+            }
+            if self.model.totalRegistrations == 0 {
+                self.alertTitle = "No attendees"
+                self.alertMessage = "It looks like you did not enter # of attendees on Precinct Screen"
                 self.showingAlert = true
             }
         }

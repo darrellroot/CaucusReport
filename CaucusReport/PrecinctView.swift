@@ -24,7 +24,7 @@ struct PrecinctView: View {
                 TextField("Precinct", text: $model.precinct)
                 .textFieldStyle(RoundedBorderTextFieldStyle())
             }
-            HStack(spacing: 15) {
+            HStack(spacing: 25) {
                 Text("Delegates:")
                 Spacer()
                 Button(action: {
@@ -38,16 +38,15 @@ struct PrecinctView: View {
                     Image(systemName: "plus")
                 }
                 Text("\(model.precinctDelegates)")
-            }
+            }.font(.title)
+            Spacer()
             VStack {
                 Text("Early Voters \(model.totalEarlyVoters)")
                 VoteModifyView(candidate: "", electionPhase: .totalEarlyVote)
                 Text("Attendee Voters \(model.totalAttendees)")
                 VoteModifyView(candidate: "",electionPhase: .totalAttendees)
-                Spacer()
-
             }
-            
+            Spacer()
         }.font(.headline).padding()
             .navigationBarTitle(Text("Precinct"), displayMode: .inline)
             .navigationBarItems(trailing:
