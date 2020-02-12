@@ -9,6 +9,9 @@
 import Foundation
 
 class Model: ObservableObject, Codable {
+    
+    static let nevadaCounties = ["Test","Carson City", "Churchill","Clark","Douglas","Elko","Esmeralda","Eureka","Humboldt","Lander","Lincoln","Lyon","Mineral","Nye","Pershing","Storey","Washoe","White Pine"]
+    
     static let originalCandidates = ["Bennet","Biden","Bloomberg","Booker","Buttigieg","Delaney","Gabbard","Kloubuchar","Patrick","Sanders","Steyer","Warren","Williamson","Yang","Uncommitted","Write-Ins"]
     
     @Published var realMode = false

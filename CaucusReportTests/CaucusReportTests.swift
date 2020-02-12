@@ -165,6 +165,111 @@ class CaucusReportTests: XCTestCase {
         XCTAssert(coinToss == "No card draws\n")
     }
 
+    func test3a() {
+        let model = Model()
+        
+        model.precinctDelegates = 6
+        model.totalAttendees = 100
+        model.attendeeVote2["Bennet"] = 38
+        model.attendeeVote2["Biden"] = 24
+        model.attendeeVote2["Bloomberg"] = 22
+        model.attendeeVote2["Booker"] = 16
+        model.attendeeVote2["Buttigieg"] = 0
+
+        let (delegates, coinToss) = model.calculateDelegates()
+        XCTAssert(delegates["Bennet"] == 2)
+        XCTAssert(delegates["Biden"] == 2)
+        XCTAssert(delegates["Bloomberg"] == 1)
+        XCTAssert(delegates["Booker"] == 1)
+        XCTAssert(delegates["Buttigieg"] == 0)
+        XCTAssert(model.viabilityPercentage == 0.15)
+        XCTAssert(model.delegateFactor(candidate: "Bennet") == 2.2800)
+        XCTAssert(model.delegateFactor(candidate: "Biden") == 1.4400)
+        XCTAssert(model.delegateFactor(candidate: "Bloomberg") == 1.3200)
+        XCTAssert(model.delegateFactor(candidate: "Booker") == 0.9600)
+        XCTAssert(model.delegateFactor(candidate: "Buttigieg") == 0.0)
+        XCTAssert(coinToss == "No card draws\n")
+    }
+    func test3b() {
+        let model = Model()
+        
+        // delegate factor for non-viable candidates irrelevant
+        // votes should not have been allowed for non-viable in alignment 2
+        // but still testing that no delegates awarded to non-viables
+        model.precinctDelegates = 10
+        model.totalAttendees = 75
+        model.attendeeVote2["Bennet"] = 10
+        model.attendeeVote2["Biden"] = 5
+        model.attendeeVote2["Bloomberg"] = 10
+        model.attendeeVote2["Booker"] = 23
+        model.attendeeVote2["Buttigieg"] = 27
+
+        let (delegates, coinToss) = model.calculateDelegates()
+        XCTAssert(delegates["Bennet"] == 0)
+        XCTAssert(delegates["Biden"] == 0)
+        XCTAssert(delegates["Bloomberg"] == 0)
+        XCTAssert(delegates["Booker"] == 5)
+        XCTAssert(delegates["Buttigieg"] == 5)
+        XCTAssert(model.viabilityPercentage == 0.15)
+        //XCTAssert(model.delegateFactor(candidate: "Bennet") == 0.00)
+        //XCTAssert(model.delegateFactor(candidate: "Biden") == 0.0)
+        //XCTAssert(model.delegateFactor(candidate: "Bloomberg") == 0.0)
+        XCTAssert(model.delegateFactor(candidate: "Booker") == 3.0667)
+        XCTAssert(model.delegateFactor(candidate: "Buttigieg") == 3.600)
+        XCTAssert(coinToss == "No card draws\n")
+    }
+    
+    func test4a() {
+        let model = Model()
+        
+        model.precinctDelegates = 5
+        model.totalAttendees = 60
+        model.attendeeVote2["Bennet"] = 0
+        model.attendeeVote2["Biden"] = 20
+        model.attendeeVote2["Bloomberg"] = 20
+        model.attendeeVote2["Booker"] = 20
+        model.attendeeVote2["Buttigieg"] = 0
+
+        let (delegates, coinToss) = model.calculateDelegates()
+        XCTAssert(delegates["Bennet"] == 0)
+        XCTAssert(delegates["Biden"] == 1)
+        XCTAssert(delegates["Bloomberg"] == 1)
+        XCTAssert(delegates["Booker"] == 1)
+        XCTAssert(delegates["Buttigieg"] == 0)
+        XCTAssert(model.viabilityPercentage == 0.15)
+        XCTAssert(model.delegateFactor(candidate: "Bennet") == 0.0)
+        XCTAssert(model.delegateFactor(candidate: "Biden") == 1.6667)
+        XCTAssert(model.delegateFactor(candidate: "Bloomberg") == 1.6667)
+        XCTAssert(model.delegateFactor(candidate: "Booker") == 1.6667)
+        XCTAssert(model.delegateFactor(candidate: "Buttigieg") == 0.0)
+        XCTAssert(coinToss == "Draw cards for 2 delegates between Biden Bloomberg Booker\n")
+    }
+
+    func test4b() {
+        let model = Model()
+        
+        model.precinctDelegates = 5
+        model.totalAttendees = 14
+        model.attendeeVote2["Bennet"] = 0
+        model.attendeeVote2["Biden"] = 0
+        model.attendeeVote2["Bloomberg"] = 7
+        model.attendeeVote2["Booker"] = 7
+        model.attendeeVote2["Buttigieg"] = 0
+
+        let (delegates, coinToss) = model.calculateDelegates()
+        XCTAssert(delegates["Bennet"] == 0)
+        XCTAssert(delegates["Biden"] == 0)
+        XCTAssert(delegates["Bloomberg"] == 2)
+        XCTAssert(delegates["Booker"] == 2)
+        XCTAssert(delegates["Buttigieg"] == 0)
+        XCTAssert(model.viabilityPercentage == 0.15)
+        XCTAssert(model.delegateFactor(candidate: "Bennet") == 0.0)
+        XCTAssert(model.delegateFactor(candidate: "Biden") == 0.0)
+        XCTAssert(model.delegateFactor(candidate: "Bloomberg") == 2.5000)
+        XCTAssert(model.delegateFactor(candidate: "Booker") == 2.5000)
+        XCTAssert(model.delegateFactor(candidate: "Buttigieg") == 0.0)
+        XCTAssert(coinToss == "Draw cards for 1 delegates between Bloomberg Booker\n")
+    }
 
     func test4c() {
         let model = Model()
