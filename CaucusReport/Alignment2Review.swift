@@ -33,7 +33,7 @@ struct Alignment2Review: View {
                     //Text("\(self.model.delegateFactor(candidate: candidate))")
                 }.foregroundColor(self.model.viable2(candidate: candidate) ? Color.blue : Color.red)
             }
-            model.validResult ? Text(model.delegateMessage()) : Text("INVALID DATA DETECTED\nFix registrations on precinct screen or alignment 2 votes")
+            model.validResult ? Text(model.delegateMessage()) : Text(model.invalidMessage)
             model.validResult ? Button(action: { self.tweet() }) {
                 Text("Tweet alignment 2 results")
                 } :
