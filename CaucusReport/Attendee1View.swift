@@ -13,7 +13,7 @@ struct Attendee1View: View {
 
         var body: some View {
             VStack {
-                Text("Do not include early voting if they were entered on the early vote screen").font(.headline).padding(.top)
+                Text("Do not include early voting if they were entered on the early vote screen").font(.headline).padding([.top,.leading,.trailing])
                 List(model.candidates, id: \.self) { candidate in
                     HStack {
                         NavigationLink(destination: AttendeeVote1Detail(candidate: candidate)) {

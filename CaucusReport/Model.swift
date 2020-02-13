@@ -15,7 +15,7 @@ class Model: ObservableObject, Codable {
     static let originalCandidates = ["Bennet","Biden","Bloomberg","Booker","Buttigieg","Delaney","Gabbard","Kloubuchar","Patrick","Sanders","Steyer","Warren","Williamson","Yang","Uncommitted","Write-Ins"]
     
     @Published var realMode = false
-    @Published var county: String = ""
+    @Published var county: String = "Test"
     @Published var precinct: String = ""
     @Published var precinctDelegates: Int = 2 {
         didSet {

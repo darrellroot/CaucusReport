@@ -15,16 +15,27 @@ struct PrecinctView: View {
     var body: some View {
         VStack {
             HStack {
+                Text("County").font(.headline).layoutPriority(1)
+                Picker(selection: $model.county, label: Text("")) {
+                    ForEach(Model.nevadaCounties, id: \.self) { county in
+                        Text(county)
+                    }
+                }.labelsHidden()
+            }
+            /*HStack {
                 Text("County:")
                 TextField("County", text: $model.county)
                 .textFieldStyle(RoundedBorderTextFieldStyle())
-            }
+            }*/
             HStack {
                 Text("Precinct:")
                 TextField("Precinct", text: $model.precinct)
                 .textFieldStyle(RoundedBorderTextFieldStyle())
             }
-            HStack(spacing: 25) {
+            Stepper(value: self.$model.precinctDelegates) {
+                Text("Delegates: \(self.model.precinctDelegates)")
+            }
+            /*HStack(spacing: 25) {
                 Text("Delegates:")
                 Spacer()
                 Button(action: {
@@ -38,7 +49,7 @@ struct PrecinctView: View {
                     Image(systemName: "plus")
                 }
                 Text("\(model.precinctDelegates)")
-            }.font(.title)
+            }.font(.title)*/
             Spacer()
             VStack {
                 Text("Early Voters \(model.totalEarlyVoters)")
