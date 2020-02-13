@@ -296,5 +296,65 @@ class CaucusReportTests: XCTestCase {
         
     }
 
+    func test1delegateA() {
+        let model = Model()
+        
+        model.precinctDelegates = 1
+        model.totalAttendees = 79
+        model.attendeeVote2["Bennet"] = 14
+        model.attendeeVote2["Biden"] = 19
+        model.attendeeVote2["Bloomberg"] = 18
+        model.attendeeVote2["Booker"] = 12
+        model.attendeeVote2["Buttigieg"] = 16
+
+        let (delegates, coinToss) = model.calculateDelegates()
+        XCTAssert(delegates["Bennet"] == 0)
+        XCTAssert(delegates["Biden"] == 1)
+        XCTAssert(delegates["Bloomberg"] == 0)
+        XCTAssert(delegates["Booker"] == 0)
+        XCTAssert(delegates["Buttigieg"] == 0)
+        XCTAssert(coinToss == "No card draws\n")
+    }
+    
+    func test1delegateTie() {
+        let model = Model()
+        
+        model.precinctDelegates = 1
+        model.totalAttendees = 79
+        model.attendeeVote2["Bennet"] = 14
+        model.attendeeVote2["Biden"] = 19
+        model.attendeeVote2["Bloomberg"] = 19
+        model.attendeeVote2["Booker"] = 12
+        model.attendeeVote2["Buttigieg"] = 16
+
+        let (delegates, coinToss) = model.calculateDelegates()
+        XCTAssert(delegates["Bennet"] == 0)
+        XCTAssert(delegates["Biden"] == 0)
+        XCTAssert(delegates["Bloomberg"] == 0)
+        XCTAssert(delegates["Booker"] == 0)
+        XCTAssert(delegates["Buttigieg"] == 0)
+        XCTAssert(coinToss == "Draw cards for 1 delegate between Biden Bloomberg\n")
+    }
+    
+    func test1delegateTie3() {
+        let model = Model()
+        
+        model.precinctDelegates = 1
+        model.totalAttendees = 79
+        model.attendeeVote2["Bennet"] = 14
+        model.attendeeVote2["Biden"] = 19
+        model.attendeeVote2["Bloomberg"] = 19
+        model.attendeeVote2["Booker"] = 19
+        model.attendeeVote2["Buttigieg"] = 16
+
+        let (delegates, coinToss) = model.calculateDelegates()
+        XCTAssert(delegates["Bennet"] == 0)
+        XCTAssert(delegates["Biden"] == 0)
+        XCTAssert(delegates["Bloomberg"] == 0)
+        XCTAssert(delegates["Booker"] == 0)
+        XCTAssert(delegates["Buttigieg"] == 0)
+        XCTAssert(coinToss == "Draw cards for 1 delegate between Biden Bloomberg Booker\n")
+    }
+
 
 }

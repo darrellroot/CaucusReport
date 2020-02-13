@@ -19,8 +19,8 @@ class Model: ObservableObject, Codable {
     @Published var precinct: String = ""
     @Published var precinctDelegates: Int = 2 {
         didSet {
-            if precinctDelegates < 2 {
-                precinctDelegates = 2
+            if precinctDelegates < 1 {
+                precinctDelegates = 1
             }
         }
     }
@@ -221,6 +221,8 @@ extension Model { // everything below here are computed properties, no permanent
     
     var viabilityPercentage: Double {
         switch self.precinctDelegates {
+        case 1:   // viability irrelevant for 1-delegate precinct
+            return 0.0001
         case 2:
             return 0.25
         case 3:
@@ -338,8 +340,42 @@ extension Model { // everything below here are computed properties, no permanent
     }
     
     func calculateDelegates() -> (delegates: [String:Int], coinToss: String) {
-        var usedDelegates = 0
         var candidateDelegates: [String: Int] = [:]
+        for candidate in candidates {
+            candidateDelegates[candidate] = 0
+        }
+
+        guard precinctDelegates > 1 else {
+            // 1-delegate precinct:
+            // ignore viability and award to highest vote2 total
+            var maxVote = 0
+            var winners: [String] = []
+            for candidate in candidates {
+                if align2Total(candidate: candidate) > maxVote {
+                    maxVote = align2Total(candidate: candidate)
+                    winners = [candidate]
+                } else if align2Total(candidate: candidate) == maxVote {
+                    winners.append(candidate)
+                }
+            }
+            if winners.count == 1 {
+                candidateDelegates[winners[0]] = 1
+                return (candidateDelegates, coinToss: "No card draws\n")
+            } else if winners.count > 1 {
+                var winnerString = ""
+                for winner in winners {
+                    winnerString = winnerString + " \(winner)"
+                }
+                let coinToss = "Draw cards for 1 delegate between\(winnerString)\n"
+                return (candidateDelegates,coinToss)
+            } else {
+                let coinToss = "Unexpected error calculating winner of 1-delegate precinct"
+                return (candidateDelegates, coinToss)
+            }
+        }
+        // guaranteed to have 2 or more delegates in precinct from here
+        var usedDelegates = 0
+
         var coinToss: String = "No card draws\n"
         guard viableCandidates.count > 0 else {
             coinToss = "No viable candidates"
@@ -367,7 +403,7 @@ extension Model { // everything below here are computed properties, no permanent
         for candidate in candidates {
             candidateDelegates[candidate] = 0
         }
-        
+
         // all viable candidates get 1 delegate even if that
         // requires more delegates than assigned to precinct
         for candidate in viableCandidates {

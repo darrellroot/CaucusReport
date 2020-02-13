@@ -26,7 +26,8 @@ struct EarlyVoter1View: View {
                     }.foregroundColor(self.model.viable1(candidate: candidate) ? Color.blue : Color.red)
                 }
             }
-        }.navigationBarTitle("Early Vote 1")
+        }.onAppear { self.model.saveData() }
+        .navigationBarTitle("Early Vote 1")
         .navigationBarItems(trailing:
             NavigationLink(destination: Attendee1View()) { HStack {
                     Text("Attendee 1")

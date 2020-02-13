@@ -23,13 +23,16 @@ struct EarlyVoter2View: View {
                         }.foregroundColor(self.model.viable2(candidate: candidate) ? Color.blue : Color.red)
                     }
                 }
-            }.navigationBarTitle("Early Vote 2")
+            }.onAppear { self.model.saveData() }
+            .navigationBarTitle("Early Vote 2")
             .navigationBarItems(trailing:
                 NavigationLink(destination: Attendee2View()) {
                     HStack {
                         Text("Attendee 2")
                         Image(systemName: "chevron.right")
-                    } })
+                    }
+                    
+            })
 
     }
 }

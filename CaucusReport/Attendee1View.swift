@@ -23,7 +23,8 @@ struct Attendee1View: View {
                         }.foregroundColor(self.model.viable1(candidate: candidate) ? Color.blue : Color.red)
                     }
                 }
-            }.navigationBarTitle("Attendee Vote 1", displayMode: .inline)
+            }.onAppear { self.model.saveData() }
+                .navigationBarTitle("Attendee Vote 1", displayMode: .inline)
             .navigationBarItems(trailing:
                 NavigationLink(destination: Alignment1Review()) { HStack {
                         Text("Review 1")
