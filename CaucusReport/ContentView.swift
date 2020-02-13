@@ -23,6 +23,7 @@ struct ContentView: View {
                     Text("Save a paper copy of all data.")
                     Text("This app uses Nevada Democratic caucus rules for all calculations.")
                     Text("This app is not associated with the Nevada Democratic Party")
+                    Text("This version of the app only supports precincts selecting 2 or more delegates.")
                     Spacer()
                     Toggle(isOn: $model.realMode) {
                         (model.realMode ? Text("Real election mode") : Text("Test mode"))
