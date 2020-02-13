@@ -9,10 +9,13 @@
 import Foundation
 
 class Model: ObservableObject, Codable {
+    
+    static let nevadaCounties = ["Test","Carson City", "Churchill","Clark","Douglas","Elko","Esmeralda","Eureka","Humboldt","Lander","Lincoln","Lyon","Mineral","Nye","Pershing","Storey","Washoe","White Pine"]
+    
     static let originalCandidates = ["Bennet","Biden","Bloomberg","Booker","Buttigieg","Delaney","Gabbard","Kloubuchar","Patrick","Sanders","Steyer","Warren","Williamson","Yang","Uncommitted","Write-Ins"]
     
     @Published var realMode = false
-    @Published var county: String = ""
+    @Published var county: String = "Test"
     @Published var precinct: String = ""
     @Published var precinctDelegates: Int = 2 {
         didSet {
@@ -127,11 +130,10 @@ class Model: ObservableObject, Codable {
         try container.encode(earlyVote2, forKey: .earlyVote2)
         try container.encode(attendeeVote1, forKey: .attendeeVote1)
         try container.encode(attendeeVote2, forKey: .attendeeVote2)
-        
     }
 }
 
-extension Model { // everything below here are calculated properties
+extension Model { // everything below here are computed properties, no permanent storage
     
     func saveData() {
         let encoder = JSONEncoder()
@@ -232,6 +234,9 @@ extension Model { // everything below here are calculated properties
     }
     
     func viable1(candidate: String) -> Bool {
+        if candidate == "Uncommitted" {
+            return false
+        }
         if align1Total(candidate: candidate) >= viability {
             return true
         } else {
@@ -239,6 +244,9 @@ extension Model { // everything below here are calculated properties
         }
     }
     func viable2(candidate: String) -> Bool {
+        if candidate == "Uncommitted" {
+            return false
+        }
         if align2Total(candidate: candidate) >= viability {
             return true
         } else {
@@ -268,7 +276,8 @@ extension Model { // everything below here are calculated properties
         
     }
     
-    func addCandidate(name: String) {
+    //adding write-in candidates not supported
+    /*func addCandidate(name: String) {
         if candidates.contains(name) {
             debugPrint("already added")
         } else {
@@ -278,7 +287,7 @@ extension Model { // everything below here are calculated properties
             earlyVote2[name] = 0
             attendeeVote2[name] = 0
         }
-    }
+    }*/
     
     var align1Tweet: String? {
         var output: String = ""
@@ -316,7 +325,7 @@ extension Model { // everything below here are calculated properties
         for candidate in viableCandidates {
             output += "\(candidate) \(align2Total(candidate: candidate))\n"
         }
-        output += calculateDelegates()
+        output += delegateMessage()
         output += "#CaucusReportApp\n"
         
         debugPrint("tweet characters \(output.count)")
@@ -324,26 +333,24 @@ extension Model { // everything below here are calculated properties
     }
     
     func delegateFactor(candidate: String) -> Double {
-        guard align1GrandTotal > 0 else { return 0.0 }
-        return (Double(align2Total(candidate: candidate)) * Double(precinctDelegates) / Double(align1GrandTotal)).rounded(toPlaces: 4)
+        guard totalRegistrations > 0 else { return 0.0 }
+        return (Double(align2Total(candidate: candidate)) * Double(precinctDelegates) / Double(totalRegistrations)).rounded(toPlaces: 4)
     }
     
-    
-    func calculateDelegates() -> String {
-        
+    func calculateDelegates() -> (delegates: [String:Int], coinToss: String) {
         var usedDelegates = 0
         var candidateDelegates: [String: Int] = [:]
-        var coinToss: String = "No coin tosses\n"
-        
-        if viableCandidates.count == 0 {
-            return "No viable candidates\n"
+        var coinToss: String = "No card draws\n"
+        guard viableCandidates.count > 0 else {
+            coinToss = "No viable candidates"
+            return (delegates: candidateDelegates, coinToss: coinToss)
         }
         func remainingFactor(candidate: String) -> Double {
             return delegateFactor(candidate: candidate) - Double(candidateDelegates[candidate]!)
         }
-        
+
         func findHighestRemainingFactor() -> [String] {
-            var largestFactor =  -1000.0
+            var largestFactor =  -1000.0 // initially set to low value
             var highestCandidates: [String] = []
             for candidate in viableCandidates {
                 if remainingFactor(candidate: candidate) > largestFactor {
@@ -355,14 +362,22 @@ extension Model { // everything below here are calculated properties
             }
             return highestCandidates
         }
-        
+
+        // initially set delegates to 0
         for candidate in candidates {
             candidateDelegates[candidate] = 0
         }
+        
+        // all viable candidates get 1 delegate even if that
+        // requires more delegates than assigned to precinct
         for candidate in viableCandidates {
             candidateDelegates[candidate] = candidateDelegates[candidate]! + 1
             usedDelegates = usedDelegates + 1
         }
+
+        // keep assigning delegates to candiates until precinct is
+        // out of delegates.  precinct might already be out
+        // of delegates if viableCandidates.count >= precinctDelegates
         while usedDelegates < precinctDelegates {
             let nextWinners: [String] = findHighestRemainingFactor()
             if nextWinners.count <= (precinctDelegates - usedDelegates) {
@@ -370,20 +385,53 @@ extension Model { // everything below here are calculated properties
                     candidateDelegates[winner] = candidateDelegates[winner]! + 1
                     usedDelegates = usedDelegates + 1
                 }
+                // if we have more tied winners this round than
+                // remaining delegages, initiate a coin toss
             } else { //nextWinners.count > remaining delegates
                 var winnerString = ""
                 for winner in nextWinners {
                     winnerString = winnerString + " \(winner)"
                 }
-                coinToss = "CoinToss for \(precinctDelegates - usedDelegates) delegates between\(winnerString)\n"
+                coinToss = "Draw cards for \(precinctDelegates - usedDelegates) delegates between\(winnerString)\n"
                 usedDelegates = precinctDelegates
             }
         }//while
+        return (delegates: candidateDelegates, coinToss: coinToss)
+        
+    }
+    
+    func delegateMessage() -> String {
         var result = "DELEGATES\n"
-        for candidate in viableCandidates {
-            result += "\(candidate) \(candidateDelegates[candidate]!)\n"
+        let (delegates, coinToss) = calculateDelegates()
+        for (candidate,delegateCount) in delegates {
+            if delegateCount > 0 {
+                result += "\(candidate) \(delegateCount)\n"
+            }
         }
         result += coinToss
         return result
+    }
+    
+    var validResult: Bool {
+        if viable2(candidate: "Write-ins") {
+            return false
+        }
+        if align2GrandTotal <= 0 {
+            return false
+        }
+        if totalRegistrations <= 0 {
+            return false
+        }
+        return true
+    }
+    
+    var invalidMessage: String {
+        return """
+        INVALID DATA DETECTED
+        Registrations on Precinct screen could be 0
+        Total votes in alignment 2 could be 0
+        Write-ins in total could be viable
+        (if too many write-ins, need to calculate manually)
+        """
     }
 }

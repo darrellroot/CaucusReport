@@ -29,7 +29,20 @@
 		2F22B39523F0C1DD009DD8ED /* Attendee1View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F22B39423F0C1DD009DD8ED /* Attendee1View.swift */; };
 		2F22B39723F0C28A009DD8ED /* AttendeeVote1Detail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F22B39623F0C28A009DD8ED /* AttendeeVote1Detail.swift */; };
 		2F22B39923F0C898009DD8ED /* Alignment1Review.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F22B39823F0C898009DD8ED /* Alignment1Review.swift */; };
+		2F78581623F486A200B5F5ED /* CaucusReportTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F78581523F486A200B5F5ED /* CaucusReportTests.swift */; };
+		2F78581D23F4870000B5F5ED /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F22B38A23F078B0009DD8ED /* Model.swift */; };
+		2F78581E23F488F100B5F5ED /* Double-Rounded.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F0BAADF23F0F5010044BA0E /* Double-Rounded.swift */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		2F78581823F486A200B5F5ED /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 2F22B36723EF2B88009DD8ED /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 2F22B36E23EF2B88009DD8ED;
+			remoteInfo = CaucusReport;
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		2F0BAAD423F0EC480044BA0E /* EarlyVoter2View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EarlyVoter2View.swift; sourceTree = "<group>"; };
@@ -56,10 +69,20 @@
 		2F22B39423F0C1DD009DD8ED /* Attendee1View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Attendee1View.swift; sourceTree = "<group>"; };
 		2F22B39623F0C28A009DD8ED /* AttendeeVote1Detail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttendeeVote1Detail.swift; sourceTree = "<group>"; };
 		2F22B39823F0C898009DD8ED /* Alignment1Review.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Alignment1Review.swift; sourceTree = "<group>"; };
+		2F78581323F486A200B5F5ED /* CaucusReportTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CaucusReportTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		2F78581523F486A200B5F5ED /* CaucusReportTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaucusReportTests.swift; sourceTree = "<group>"; };
+		2F78581723F486A200B5F5ED /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		2F22B36C23EF2B88009DD8ED /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2F78581023F486A200B5F5ED /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -89,6 +112,7 @@
 			isa = PBXGroup;
 			children = (
 				2F22B37123EF2B88009DD8ED /* CaucusReport */,
+				2F78581423F486A200B5F5ED /* CaucusReportTests */,
 				2F22B37023EF2B88009DD8ED /* Products */,
 			);
 			sourceTree = "<group>";
@@ -97,6 +121,7 @@
 			isa = PBXGroup;
 			children = (
 				2F22B36F23EF2B88009DD8ED /* CaucusReport.app */,
+				2F78581323F486A200B5F5ED /* CaucusReportTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -139,6 +164,15 @@
 			path = "Preview Content";
 			sourceTree = "<group>";
 		};
+		2F78581423F486A200B5F5ED /* CaucusReportTests */ = {
+			isa = PBXGroup;
+			children = (
+				2F78581523F486A200B5F5ED /* CaucusReportTests.swift */,
+				2F78581723F486A200B5F5ED /* Info.plist */,
+			);
+			path = CaucusReportTests;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -159,6 +193,24 @@
 			productReference = 2F22B36F23EF2B88009DD8ED /* CaucusReport.app */;
 			productType = "com.apple.product-type.application";
 		};
+		2F78581223F486A200B5F5ED /* CaucusReportTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 2F78581C23F486A200B5F5ED /* Build configuration list for PBXNativeTarget "CaucusReportTests" */;
+			buildPhases = (
+				2F78580F23F486A200B5F5ED /* Sources */,
+				2F78581023F486A200B5F5ED /* Frameworks */,
+				2F78581123F486A200B5F5ED /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				2F78581923F486A200B5F5ED /* PBXTargetDependency */,
+			);
+			name = CaucusReportTests;
+			productName = CaucusReportTests;
+			productReference = 2F78581323F486A200B5F5ED /* CaucusReportTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -171,6 +223,10 @@
 				TargetAttributes = {
 					2F22B36E23EF2B88009DD8ED = {
 						CreatedOnToolsVersion = 11.3.1;
+					};
+					2F78581223F486A200B5F5ED = {
+						CreatedOnToolsVersion = 11.3.1;
+						TestTargetID = 2F22B36E23EF2B88009DD8ED;
 					};
 				};
 			};
@@ -188,6 +244,7 @@
 			projectRoot = "";
 			targets = (
 				2F22B36E23EF2B88009DD8ED /* CaucusReport */,
+				2F78581223F486A200B5F5ED /* CaucusReportTests */,
 			);
 		};
 /* End PBXProject section */
@@ -200,6 +257,13 @@
 				2F22B37F23EF2B8C009DD8ED /* LaunchScreen.storyboard in Resources */,
 				2F0BAB0423F12A800044BA0E /* Assets.xcassets in Resources */,
 				2F22B37C23EF2B8C009DD8ED /* Preview Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2F78581123F486A200B5F5ED /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -232,7 +296,25 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		2F78580F23F486A200B5F5ED /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2F78581E23F488F100B5F5ED /* Double-Rounded.swift in Sources */,
+				2F78581623F486A200B5F5ED /* CaucusReportTests.swift in Sources */,
+				2F78581D23F4870000B5F5ED /* Model.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		2F78581923F486A200B5F5ED /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 2F22B36E23EF2B88009DD8ED /* CaucusReport */;
+			targetProxy = 2F78581823F486A200B5F5ED /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		2F22B37D23EF2B8C009DD8ED /* LaunchScreen.storyboard */ = {
@@ -365,7 +447,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 3;
 				DEVELOPMENT_ASSET_PATHS = "\"CaucusReport/Preview Content\"";
 				DEVELOPMENT_TEAM = 8DU2Q8ABKY;
 				ENABLE_PREVIEWS = YES;
@@ -374,10 +456,11 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MARKETING_VERSION = 1.1;
 				PRODUCT_BUNDLE_IDENTIFIER = net.networkmom.CaucusReport;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = 1;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
@@ -386,7 +469,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 3;
 				DEVELOPMENT_ASSET_PATHS = "\"CaucusReport/Preview Content\"";
 				DEVELOPMENT_TEAM = 8DU2Q8ABKY;
 				ENABLE_PREVIEWS = YES;
@@ -395,10 +478,53 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MARKETING_VERSION = 1.1;
 				PRODUCT_BUNDLE_IDENTIFIER = net.networkmom.CaucusReport;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = 1;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		2F78581A23F486A200B5F5ED /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 8DU2Q8ABKY;
+				INFOPLIST_FILE = CaucusReportTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = net.networkmom.CaucusReportTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/CaucusReport.app/CaucusReport";
+			};
+			name = Debug;
+		};
+		2F78581B23F486A200B5F5ED /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 8DU2Q8ABKY;
+				INFOPLIST_FILE = CaucusReportTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = net.networkmom.CaucusReportTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/CaucusReport.app/CaucusReport";
 			};
 			name = Release;
 		};
@@ -419,6 +545,15 @@
 			buildConfigurations = (
 				2F22B38423EF2B8C009DD8ED /* Debug */,
 				2F22B38523EF2B8C009DD8ED /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		2F78581C23F486A200B5F5ED /* Build configuration list for PBXNativeTarget "CaucusReportTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2F78581A23F486A200B5F5ED /* Debug */,
+				2F78581B23F486A200B5F5ED /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
