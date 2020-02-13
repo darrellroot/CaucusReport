@@ -10,7 +10,9 @@ import SwiftUI
 
 struct PrecinctView: View {
     @EnvironmentObject var model: Model
-    
+    @State var showingAlert = false
+    @State var alertTitle = ""
+    @State var alertMessage = ""
     
     var body: some View {
         VStack {
@@ -22,34 +24,26 @@ struct PrecinctView: View {
                     }
                 }.labelsHidden()
             }
-            /*HStack {
-                Text("County:")
-                TextField("County", text: $model.county)
-                .textFieldStyle(RoundedBorderTextFieldStyle())
-            }*/
             HStack {
                 Text("Precinct:")
                 TextField("Precinct", text: $model.precinct)
-                .textFieldStyle(RoundedBorderTextFieldStyle())
+                    .textFieldStyle(RoundedBorderTextFieldStyle())
             }
-            Stepper(value: self.$model.precinctDelegates) {
+            Stepper(onIncrement: {
+                self.model.precinctDelegates += 1
+            }, onDecrement: {
+                self.model.precinctDelegates -= 1
+                if self.model.precinctDelegates == 1 {
+                    self.alertTitle = "Notice"
+                    self.alertMessage = "Precincts with 1 delegate only have 1 alignment, and immediately award the delegate to the candidate with the most votes"
+                    self.showingAlert = true
+                }
+            }) {
                 Text("Delegates: \(self.model.precinctDelegates)")
             }
-            /*HStack(spacing: 25) {
-                Text("Delegates:")
-                Spacer()
-                Button(action: {
-                    self.model.precinctDelegates = self.model.precinctDelegates - 1
-                }) {
-                    Image(systemName: "minus")
-                }
-                Button(action: {
-                    self.model.precinctDelegates = self.model.precinctDelegates + 1
-                }) {
-                    Image(systemName: "plus")
-                }
-                Text("\(model.precinctDelegates)")
-            }.font(.title)*/
+            /*Stepper(value: self.$model.precinctDelegates, in: 1...1000) {
+             Text("Delegates: \(self.model.precinctDelegates)")
+             }*/
             Spacer()
             VStack {
                 Text("Early Voters \(model.totalEarlyVoters)")
@@ -58,15 +52,52 @@ struct PrecinctView: View {
                 VoteModifyView(candidate: "",electionPhase: .totalAttendees)
             }
             Spacer()
-        }.font(.headline).padding()
-            .navigationBarTitle(Text("Precinct"), displayMode: .inline)
-            .navigationBarItems(trailing:
-                NavigationLink(destination: EarlyVoter1View()) { HStack {
+        }.alert(isPresented: $showingAlert) {
+            Alert(title: Text(alertTitle), message: Text(alertMessage), dismissButton: .default(Text("Ok")))
+        }
+        .font(.headline).padding()
+        .navigationBarTitle(Text("Precinct"), displayMode: .inline)
+        .navigationBarItems(trailing:
+            HStack {
+                if self.model.precinctDelegates == 1 {
+                    NavigationLink(destination: EarlyVoter2View()) {
+                        HStack {
+                            Text("Early Vote2")
+                            Image(systemName: "chevron.right")
+                        }
+                    }
+                } else {
+                    NavigationLink(destination: EarlyVoter1View()) {
+                        HStack {
+                            Text("Early Vote1")
+                            Image(systemName: "chevron.right")
+                        }
+                    }
+                }
+            }
+        )
+        /*.navigationBarItems(trailing:
+            NavigationLink(destination: (self.model.precinctDelegates != 1 ? EarlyVoter1View() : EarlyVoter2View())) {
+                HStack {
+                    Text("Early Vote1 ")
+                    Image(systemName: "chevron.right")
+                }
+        })*/
+        /*self.model.precinctDelegates != 1 ? .navigationBarItems(trailing:
+             NavigationLink(destination: EarlyVoter1View()) {
+                    HStack {
                         Text("Early Vote1 ")
                         Image(systemName: "chevron.right")
-                    } })
-    }
-}
+                    }
+            }) : .navigationBarItems(trailing: NavigationLink(destination: EarlyVoter2View()) {
+                    HStack {
+                        Text("Early Vote2 ")
+                        Image(systemName: "chevron.right")
+                    }
+                }
+            )*/
+    }// body
+}// struct
 
 struct PrecinctView_Previews: PreviewProvider {
     static var previews: some View {
